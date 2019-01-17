@@ -20,12 +20,21 @@ class Shooter : public frc::Subsystem {
   // for methods that implement subsystem capabilities
 Spark m_shooterPickupTop{SHOOTER_PICKUP_TOP};
 Spark m_shooterPickupBottom{SHOOTER_PICKUP_BOTTOM};
-Spark m_shooterWindow{SHOOTER_WINDOW_MOTOR};
-Encoder *WindowEncoder = new Encoder(SHOOTER_WINDOW_ENCODER_CHANNELA, SHOOTER_WINDOW_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
-
+Spark m_shooterSeat{SHOOTER_WINDOW_MOTOR};
+Encoder *m_pSeatEncoder = new Encoder(SHOOTER_WINDOW_ENCODER_CHANNELA, SHOOTER_WINDOW_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
+double m_encoderResoultion;
+//moter speed for the pickup 
+double m_motorSpeedPickup = 0.25;
  public:
   Shooter();
+  void InvertMotorsPickUp();
+  void SetPickUpMotor(double Speed);
   void InitDefaultCommand() override;
-  void TeleopDrive(XboxController* controller);
+  void TeleopPickUp(XboxController* controller);
+  void SetAngle(double angle);
+
+
+  //finsh the encoder before uses
+  void TeleopAim(XboxController* controller);
 
 };
