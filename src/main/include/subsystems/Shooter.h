@@ -23,9 +23,12 @@ class Shooter : public frc::Subsystem {
 Spark m_shooterPickupTop{SHOOTER_PICKUP_TOP};
 Spark m_shooterPickupBottom{SHOOTER_PICKUP_BOTTOM};
 Spark m_shooterAim{SHOOTER_WINDOW_MOTOR};
+
 Encoder *m_pShooterEncoder = new Encoder(SHOOTER_ENCODER_CHANNELA, SHOOTER_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
+
 Util m_util;
-double m_encoderResoultion;
+int m_joystickpress = 0;
+
 //moter speed for the pickup 
  public:
   Shooter();
@@ -33,5 +36,6 @@ double m_encoderResoultion;
   void InitDefaultCommand() override;
   void TeleopPickUp(XboxController* controller);
   void SetAngle(XboxController* controller);
+  void StopMotors();
 
 };

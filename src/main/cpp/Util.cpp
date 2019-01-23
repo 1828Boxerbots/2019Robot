@@ -21,30 +21,26 @@ double Util::Limit(double upperlimit, double lowerlimit, double value)
     }
     return value;
 }
-double Util::ToggleSwitch(bool firstbutton, bool secondbuttton, 
-    double firstState, double secondState, bool thirdState, int*pJoystickPress)
+double Util::ToggleSwitch(bool toggleButton, bool resetButtton, 
+    double firstState, double secondState, bool processSecondbutton, int*pJoystickPress)
 {
-    if ((firstbutton == true) && (*pJoystickPress == 0))
+    if ((toggleButton == true) && (*pJoystickPress == 0))
     {
         *pJoystickPress ++;
         return firstState;
     }
-    if ((firstbutton == true) && (*pJoystickPress == 1))
+    if ((toggleButton == true) && (*pJoystickPress == 1))
     {
         *pJoystickPress --;
         return secondState;
     }
-    if (thirdState == true)
+    if (processSecondbutton == true)
     {
-        if (secondbuttton == true)
+        if (resetButtton == true)
         {
             return 0.0;
         }
     }
-    else
-    {
-    }
-    
 }
 
 

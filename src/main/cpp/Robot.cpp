@@ -12,6 +12,7 @@
 
 std::shared_ptr <DriveTrain> Robot::m_driveTrain = std::make_shared<DriveTrain>();
 std::shared_ptr <Shooter> Robot::m_shooter = std::make_shared<Shooter>();
+std::shared_ptr <Arm> Robot::m_arm = std::make_shared<Arm>();
 OI Robot::m_oi;
 
 void Robot::RobotInit() 

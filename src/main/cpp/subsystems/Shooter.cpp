@@ -8,10 +8,7 @@
 #include "subsystems/Shooter.h"
 
 using namespace frc;
-Shooter::Shooter() : Subsystem("Shooter")
-{
-  m_pShooterEncoder->Reset();
-}
+Shooter::Shooter() : Subsystem("Shooter") {}
 
 void Shooter::InitDefaultCommand() 
 {
@@ -20,15 +17,21 @@ void Shooter::InitDefaultCommand()
 }
 void Shooter::SetAngle(XboxController* controller)
 {
+  //"shooterTick" get the current tick number of the encoder
   double shooterTick = m_pShooterEncoder->GetRaw();
-  bool Xbutton = controller->GetXButton();
-  bool Abutton = controller->GetAButton();
-  int joystickpress = 0;
+
+  //get button state (true or false)
+  bool xButton = controller->GetXButton();
+  bool aButton = controller->GetAButton();
+
+  // this is setting angle to tick numbers
   const double ANGLE_45 = 21.0;
   const double ANGLE_90 = 43.0;
 
-  double position = m_util.ToggleSwitch(Xbutton, Abutton, ANGLE_45, ANGLE_90, true, &joystickpress);
+  // set the target tick number to the angle we want
+  double position = m_util.ToggleSwitch(xButton, aButton, ANGLE_45, ANGLE_90, true, &m_joystickpress);
 
+  //if the current tick read is less than target then set motor either foward or backwards 
   if (shooterTick < position)
   {
     m_shooterAim.Set(0.75);
@@ -37,6 +40,7 @@ void Shooter::SetAngle(XboxController* controller)
   {
     m_shooterAim.Set(-0.75);
   }
+  // stop the motor if it is in the range
   if ((shooterTick < position-1.0) || (shooterTick > position+1.0))
   {
     m_shooterAim.Set(0);
@@ -78,6 +82,12 @@ void Shooter::InvertMotorsPickUp()
   m_shooterPickupBottom.SetInverted(true);
   m_shooterPickupTop.SetInverted(false);
   m_shooterAim.SetInverted(false);
+}
+void Shooter::StopMotors()
+{
+  m_shooterPickupBottom.Set(0);
+  m_shooterPickupTop.Set(0);
+  m_shooterAim.Set(0);
 }
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

@@ -17,6 +17,7 @@
 
 #include "subsystems/DriveTrain.h"
 #include "subsystems/Shooter.h"
+#include "subsystem/Arm.h"
 
 using namespace frc;
 
@@ -27,6 +28,7 @@ class Robot : public frc::TimedRobot
 
   static std::shared_ptr <DriveTrain> m_driveTrain;
   static std::shared_ptr <Shooter> m_shooter;
+  static std::shared_ptr <Arm> m_arm;
 
   void RobotInit() override;
   void RobotPeriodic() override;
