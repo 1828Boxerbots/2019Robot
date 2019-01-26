@@ -12,12 +12,20 @@
 #include <frc/smartdashboard/SendableChooser.h>
 
 #include "OI.h"
+
 #include "commands/DriveTrainCMD.h"
+#include "commands/ShooterCMD.h"
+#include "commands/ArmCMD.h"
+#include "commands/PincherCMD.h"
+
 
 
 #include "subsystems/DriveTrain.h"
+#include "subsystems/Gantry.h"
 #include "subsystems/Shooter.h"
-#include "subsystem/Arm.h"
+#include "subsystems/Arm.h"
+#include "subsystems/Pincher.h"
+
 
 using namespace frc;
 
@@ -29,6 +37,8 @@ class Robot : public frc::TimedRobot
   static std::shared_ptr <DriveTrain> m_driveTrain;
   static std::shared_ptr <Shooter> m_shooter;
   static std::shared_ptr <Arm> m_arm;
+  static std::shared_ptr <Gantry> m_gantry;
+  static std::shared_ptr <Pincher> m_pincher;
 
   void RobotInit() override;
   void RobotPeriodic() override;
@@ -45,4 +55,10 @@ class Robot : public frc::TimedRobot
   // doesn't have undefined behavior and potentially crash.
 
   DriveTrainCMD m_driveTrainCMD;
+  ShooterCMD m_shooterCMD;
+  ArmCMD m_armCMD;
+  PincherCMD m_pincherCMD;
+  
+
+
 };

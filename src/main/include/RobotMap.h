@@ -13,7 +13,9 @@ constexpr int SHOOTER_WINDOW_MOTOR = 0;
 constexpr int SHOOTER_PICKUP_TOP = 0;
 constexpr int SHOOTER_PICKUP_BOTTOM = 0;
 constexpr int ARM_MOTOR = 0;
-
+constexpr int LEFT_GANTRY_MOTOR = 0;
+constexpr int RIGHT_GANTRY_MOTOR = 0;
+constexpr int PINCHER_SERVO = 0;
 //DIO
 constexpr int SHOOTER_ENCODER_CHANNELA = 0;
 constexpr int SHOOTER_ENCODER_CHANNELB = 0;

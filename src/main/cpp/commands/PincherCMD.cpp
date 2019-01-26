@@ -5,38 +5,31 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ShooterCMD.h"
+#include "commands/PincherCMD.h"
 #include "Robot.h"
 
-ShooterCMD::ShooterCMD() 
+PincherCMD::PincherCMD() 
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_shooter.get());
+  Requires(Robot::m_pincher.get());
 }
 
 // Called just before this Command runs the first time
-void ShooterCMD::Initialize() 
-{
-  Robot::m_shooter->InvertMotorsPickUp();
-}
+void PincherCMD::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void ShooterCMD::Execute() 
+void PincherCMD::Execute() 
 {
-  Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
-  Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
+  Robot::m_pincher->TeleOpPincher(Robot::m_oi.GetController());
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ShooterCMD::IsFinished() { return false; }
+bool PincherCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ShooterCMD::End() 
-{
-  Robot::m_shooter->StopMotors();
-}
+void PincherCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ShooterCMD::Interrupted() {}
+void PincherCMD::Interrupted() {}
