@@ -6,9 +6,7 @@
 /*----------------------------------------------------------------------------*/
 
 #include "../include/Util.h"
-Util::Util()
-{
-}
+
 double Util::Limit(double upperlimit, double lowerlimit, double value)
 {
     if (value > upperlimit)
@@ -42,5 +40,3 @@ double Util::ToggleSwitch(bool toggleButton, bool resetButtton,
         }
     }
 }
-
-
