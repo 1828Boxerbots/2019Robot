@@ -7,9 +7,9 @@
 
 #include "commands/PincherCMD.h"
 #include "Robot.h"
+#include "OI.h"
 
-PincherCMD::PincherCMD() 
-{
+PincherCMD::PincherCMD() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
   Requires(Robot::m_pincher.get());
@@ -19,8 +19,7 @@ PincherCMD::PincherCMD()
 void PincherCMD::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void PincherCMD::Execute() 
-{
+void PincherCMD::Execute() {
   Robot::m_pincher->TeleOpPincher(Robot::m_oi.GetController());
 }
 

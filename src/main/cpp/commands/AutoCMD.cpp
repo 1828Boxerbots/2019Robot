@@ -5,32 +5,25 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/GantryCMD.h"
-#include "Robot.h"
-#include "OI.h"
+#include "commands/AutoCMD.h"
 
-GantryCMD::GantryCMD() {
+AutoCMD::AutoCMD() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_gantry.get());
 }
 
 // Called just before this Command runs the first time
-void GantryCMD::Initialize() {
-
-}
+void AutoCMD::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void GantryCMD::Execute() {
-  Robot::m_gantry->Teleop(Robot::m_oi.GetController());
-}
+void AutoCMD::Execute() {}
 
 // Make this return true when this Command no longer needs to run execute()
-bool GantryCMD::IsFinished() { return false; }
+bool AutoCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void GantryCMD::End() {}
+void AutoCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void GantryCMD::Interrupted() {}
+void AutoCMD::Interrupted() {}

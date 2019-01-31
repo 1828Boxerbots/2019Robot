@@ -8,7 +8,7 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <Servo.h>
+#include <frc/Servo.h>
 #include "RobotMap.h"
 #include <frc/XboxController.h>
 #include "Util.h"
@@ -20,10 +20,12 @@ class Pincher : public frc::Subsystem
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
 Util m_util;
-Servo m_pincher {PINCHER_SERVO};
+Servo m_servoPincher {PINCHER_SERVO};
 int m_joystickpress = 0;
  public:
   Pincher();
   void InitDefaultCommand() override;
   void TeleOpPincher(XboxController* pController);
+  void AutoOpen();
+  void AutoClose();
 };

@@ -47,15 +47,25 @@ void Gantry::InitDefaultCommand()
 
 void Gantry::MoveUp()
 {
-    //When the right bumper is pressed, move gantry up
-    m_gantryMotorLeft.Set(0.5);
-    m_gantryMotorRight.Set(0.5);
+    bool UpperLimit = m_topLimit.Get();
+
+    if(UpperLimit == false)
+    {
+        //When the right bumper is pressed, move gantry up
+        m_gantryMotorLeft.Set(0.5);
+        m_gantryMotorRight.Set(0.5);
+    }
 }
 void Gantry::MoveDown()
 {
-    //When the left bumper is pressed, move gantry down
-    m_gantryMotorLeft.Set(-0.5);
-    m_gantryMotorRight.Set(-0.5);
+    bool lowerLimit = m_lowerLimit.Get();
+    
+     if(lowerLimit == false)
+     {
+        //When the left bumper is pressed, move gantry down
+        m_gantryMotorLeft.Set(-0.5);
+        m_gantryMotorRight.Set(-0.5);
+     }
 }
 void Gantry::StopMotors()
 {
@@ -63,4 +73,32 @@ void Gantry::StopMotors()
     m_gantryMotorLeft.Set(0.0);
     m_gantryMotorRight.Set(0.0);
 }
-  
+
+void Gantry::MoveToStandardLevel()
+{
+    double distance = ((m_pGantryEncoder->GetRaw()) / MM_TO_IN);
+    while (m_lowerLimit.Get() == false)
+    {
+        MoveDown();
+    }
+    StopMotors();
+}
+
+void Gantry::MoveToLevelOne(double distanceIninchs)
+{
+    double distance = ((m_pGantryEncoder->GetRaw()) / MM_TO_IN);
+
+    MoveUp();
+
+    while(distanceIninchs > distance)
+    {
+        if ((m_topLimit.Get() == true) || (m_lowerLimit.Get() == true))
+        {
+            StopMotors();
+        }
+         Wait(0.2);
+    }
+
+    StopMotors();
+
+}

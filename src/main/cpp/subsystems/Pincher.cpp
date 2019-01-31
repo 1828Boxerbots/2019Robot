@@ -24,7 +24,28 @@ void Pincher::TeleOpPincher(XboxController* pController)
 
   double angle = m_util.ToggleSwitch(yButton, false, ninetyDegrees, zeroDegrees, false, &m_joystickpress);
 
-  m_pincher.SetAngle(angle);
+  m_servoPincher.SetAngle(angle);
+}
+
+void Pincher::AutoOpen()
+{
+  double angle = 90;
+  m_servoPincher.SetAngle(angle);
+  while (m_servoPincher.GetAngle() < angle)
+  {
+   //check if interrupted
+
+  }
+}
+
+void Pincher::AutoClose()
+{
+  double angle = 0;
+  m_servoPincher.SetAngle(angle);
+   while (m_servoPincher.GetAngle() > angle)
+  {
+    //check if interrupted
+  }
 }
 
 // Put methods for controlling this subsystem
