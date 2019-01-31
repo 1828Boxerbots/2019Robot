@@ -5,38 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ShooterCMD.h"
+#include "commands/GantryCMD.h"
 #include "Robot.h"
+#include "OI.h"
 
-ShooterCMD::ShooterCMD() 
-{
+GantryCMD::GantryCMD() {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_shooter.get());
+  Requires(Robot::m_gantry.get());
 }
 
 // Called just before this Command runs the first time
-void ShooterCMD::Initialize() 
-{
-  Robot::m_shooter->InvertMotorsPickUp();
+void GantryCMD::Initialize() {
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ShooterCMD::Execute() 
-{
-  Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
-  Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
+void GantryCMD::Execute() {
+  Robot::m_gantry->Teleop(Robot::m_oi.GetController());
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool ShooterCMD::IsFinished() { return false; }
+bool GantryCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ShooterCMD::End() 
-{
-  Robot::m_shooter->StopMotors();
-}
+void GantryCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ShooterCMD::Interrupted() {}
+void GantryCMD::Interrupted() {}

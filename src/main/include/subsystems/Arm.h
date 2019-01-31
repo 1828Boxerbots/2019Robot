@@ -21,9 +21,9 @@ class Arm : public frc::Subsystem
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-  Spark m_arm {ARM_MOTOR};
+  Spark m_armMotor {ARM_MOTOR};
 
-  Encoder *m_pArmEncoder = new Encoder(SHOOTER_ENCODER_CHANNELA, SHOOTER_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
+  Encoder *m_pArmEncoder = new Encoder(ARM_ENCODER_CHANNELA, ARM_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
 
 
   Util m_util;
@@ -33,5 +33,12 @@ class Arm : public frc::Subsystem
   Arm();
   void InitDefaultCommand() override;
   void InvertMotors();
+
+ //moves the arm to either 90 degrees or 0 degrees
+  void ArmUp();
+  void ArmDown();
+
+  /*Makes it so that the player can move the arm up/down
+  @parn "pcontroller" enters in the address of the controller object to get input*/
   void TeleopArm(XboxController *pController);
 };
