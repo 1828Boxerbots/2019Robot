@@ -41,4 +41,7 @@ class Arm : public frc::Subsystem
   void TeleopArm(XboxController *pController);
 	int GetPosition();
   void Intialize();
+  //moves the arm to either 90 degrees or 0 degrees
+  void ArmUp();
+  void ArmDown();
 };

@@ -76,11 +76,43 @@ void Gantry::StopMotors()
     m_gantryMotorLeft.Set(0.0);
     m_gantryMotorRight.Set(0.0);
 }
+void Gantry::MoveToStandardLevel()
+{
+    // double distance = ((m_pGantryEncoder->GetRaw()) / MM_TO_IN);
+    // while (m_lowerLimit.Get() == false)
+    // {
+    //     MoveDown();
+    // }
+    // StopMotors();
+    MoveToPosition(m_stdPosition);
+}
 void Gantry::MoveUntilPosition(double targetposition)
 {
     double winchRadius = 1;
     m_pGantryEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * winchRadius);
    
+}
+void Gantry::MoveToLevelOne()
+{
+    MoveToPosition(m_levelOnePosition);
+}
+
+void Gantry::MoveToPosition(double distanceIninchs)
+{
+    double distance = ((m_pGantryEncoder.GetDistance()) / MM_TO_IN);
+
+    MoveUp();
+
+    while(distanceIninchs > distance)
+    {
+        if ((m_topLimit.Get() == true) || (m_bottomLimit.Get() == true))
+        {
+            StopMotors();
+        }
+         Wait(0.2);
+    }
+
+    StopMotors();
 }
 
 // Put methods for controlling this subsystem

@@ -53,7 +53,7 @@ int Arm::GetPosition()
 }
 void Arm::TeleopArm (XboxController *pController)
 {
-  double armTick = m_Position;
+  int armTick = m_Position;
 
   double bButton = pController->GetBButton();
 
@@ -72,6 +72,32 @@ void Arm::TeleopArm (XboxController *pController)
   }
   // stop the motor if it is in the range
   if ((armTick < position-1.0) || (armTick > position+1.0))
+  {
+    m_arm.Set(0);
+  }
+}
+void Arm::ArmUp()
+{
+  int armTick = m_Position;
+  const double zeroDegree = 0.0;
+  if (armTick > zeroDegree)
+  {
+    m_arm.Set(0.7);
+  }
+  else
+  {
+    m_arm.Set(.07);
+  }
+}
+void Arm::ArmDown()
+{
+  int armTick = m_Position;
+  const double ninetyDegree = 43.0;
+  if (armTick < ninetyDegree)
+  {
+    m_arm.Set(-0.7);
+  }
+  else
   {
     m_arm.Set(0);
   }

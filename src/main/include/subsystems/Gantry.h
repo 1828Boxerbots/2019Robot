@@ -18,20 +18,39 @@ using namespace frc;
 class Gantry : public frc::Subsystem 
 {
  private:
+  // constants
+  const double LOWER_LIMIT_ENCODER_VALUE = 50;
+  const double UPPER_LIMIT_ENCODER_VALUE = 1003;
+  const double STANDARD_LEVEL_ENCODER_VALUE = 123;
+  const double LEVEL_ONE_ENCODER_VALUE = 456;
+
+  const double MM_TO_IN = 25.4;
+
+    const double m_stdPosition = 104.0;
+    const double m_levelOnePosition = 503.0; 
+
+
+ private:
   Spark m_gantryMotorLeft{LEFT_GANTRY_MOTOR};
   Spark m_gantryMotorRight{RIGHT_GANTRY_MOTOR};
   DigitalInput m_topLimit{TOP_LIMIT};
   DigitalInput m_bottomLimit{BOTTOM_LIMIT};
 
   Encoder m_pGantryEncoder{GANTRY_ENCODER_CHANNEL_A, GANTRY_ENCODER_CHANNEL_B, false, Encoder::EncodingType::k4X};
+
   void MoveUp();
   void MoveDown();
   void StopMotors();
-  
  public:
   Gantry();
   void MoveUntilPosition(double targetposition);
   void InitDefaultCommand() override;
   void TeleopGantry(XboxController* pController);
   void InvertMotors();
+    /*The level that is flush with the arm (StandardGantryLevel)
+  The level that is flush with the first hole on the rocket ships (GantryLevelOne)
+  Only used for autonomious*/
+  void MoveToStandardLevel();
+  void MoveToLevelOne();
+  void MoveToPosition(double distanceTicknumber);
 };
