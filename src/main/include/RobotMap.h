@@ -13,8 +13,13 @@ constexpr int SHOOTER_WINDOW_MOTOR = 0;
 constexpr int SHOOTER_PICKUP_TOP = 0;
 constexpr int SHOOTER_PICKUP_BOTTOM = 0;
 constexpr int ARM_MOTOR = 0;
-
+constexpr int LEFT_GANTRY_MOTOR = 0;
+constexpr int RIGHT_GANTRY_MOTOR = 0;
+constexpr int PINCHER_SERVO = 0;
 //DIO
+constexpr int GANTRY_ENCODER_CHANNELA = 0;
+constexpr int GANTRY_ENCODER_CHANNELB = 0;
+
 constexpr int SHOOTER_ENCODER_CHANNELA = 0;
 constexpr int SHOOTER_ENCODER_CHANNELB = 0;
 
@@ -26,6 +31,9 @@ constexpr int LEFT_ENCODER_CHANNEL_B = 8;
 
 constexpr int RIGHT_ENCODER_CHANNEL_A = 9;
 constexpr int RIGHT_ENCODER_CHANNEL_B = 8;
+
+constexpr int UPPER_LIMIT = 1;
+constexpr int LOWER_LIMIT = 2;
 
 //USB
 constexpr int XBOXCONTROLLER_USB = 0;

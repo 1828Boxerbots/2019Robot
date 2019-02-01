@@ -9,9 +9,9 @@
 
 #include <frc/commands/Command.h>
 
-class Arm : public frc::Command {
+class ArmCMD : public frc::Command {
  public:
-  Arm();
+  ArmCMD();
   void Initialize() override;
   void Execute() override;
   bool IsFinished() override;

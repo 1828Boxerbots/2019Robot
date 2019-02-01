@@ -37,5 +37,4 @@ int m_joystickpress = 0;
   void TeleopPickUp(XboxController* controller);
   void SetAngle(XboxController* controller);
   void StopMotors();
-
 };

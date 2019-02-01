@@ -5,38 +5,51 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/ShooterCMD.h"
+#include "commands/AutoCMD.h"
 #include "Robot.h"
 
-ShooterCMD::ShooterCMD() 
+AutoCMD::AutoCMD() 
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_shooter.get());
-}
+  Requires(Robot::m_driveTrain.get());
+  Requires(Robot::m_arm.get());
+  Requires(Robot::m_gantry.get());
+  Requires(Robot::m_pincher.get());
 
+}
 // Called just before this Command runs the first time
-void ShooterCMD::Initialize() 
+void AutoCMD::Initialize() 
 {
-  Robot::m_shooter->InvertMotorsPickUp();
+//Read shuffle board
+
+m_auto = false; //TBD
+m_fieldPosition = 1; // TBD
+
 }
 
 // Called repeatedly when this Command is scheduled to run
-void ShooterCMD::Execute() 
-{
-  Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
-  Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
+void AutoCMD::Execute()
+ {
+  switch(m_fieldPosition)
+  {
+  case 1:
+    AutoOne();
+    break;
+  case 2:
+    AutoTwo();
+    break;
+  case 3:
+    AutoThree();
+    break;
+  }
 }
-
 // Make this return true when this Command no longer needs to run execute()
-bool ShooterCMD::IsFinished() { return false; }
+bool AutoCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void ShooterCMD::End() 
-{
-  Robot::m_shooter->StopMotors();
-}
+void AutoCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void ShooterCMD::Interrupted() {}
+void AutoCMD::Interrupted() {}

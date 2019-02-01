@@ -17,8 +17,8 @@ using namespace frc;
 class DriveTrain : public frc::Subsystem {
  private:
   
-  Encoder *m_leftMotorEncoder = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X);
-  Encoder *m_rightMotorEncoder = new Encoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X);
+  Encoder *m_pLeftMotorEncoder = new Encoder(LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X);
+  Encoder *m_pRightMotorEncoder = new Encoder(RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X);
   Spark m_leftMotor {LEFTMOTOR};
   Spark m_rightMotor {RIGHTMOTOR};
   Util util;
@@ -31,4 +31,6 @@ class DriveTrain : public frc::Subsystem {
   void TeleopDrive(XboxController* controller);
   void StopDriveMotors();
   void InvertMotors();
-};
+  void MoveMotersFwd(double speed, double distanceIninchs);
+  void MoveMotersTurn(double angle, double speed = 0.5);
+  };

@@ -13,11 +13,11 @@ DriveTrain::DriveTrain() : Subsystem("DriveTrain") {}
 
 void DriveTrain::TeleopDrive(XboxController* controller)
 {
-  double LeftDistance = m_leftMotorEncoder->GetDistance();
-  SmartDashboard::PutNumber("m_leftMotorEncoder", (LeftDistance/25.4));
+  double LeftDistance = m_pLeftMotorEncoder->GetDistance();
+  SmartDashboard::PutNumber("m_pLeftMotorEncoder", (LeftDistance/25.4));
 
-  double RightDistance = m_rightMotorEncoder->GetDistance();
-  SmartDashboard::PutNumber("m_rightMotorEncoder", (RightDistance/25.4));
+  double RightDistance = m_pRightMotorEncoder->GetDistance();
+  SmartDashboard::PutNumber("m_pRightMotorEncoder", (RightDistance/25.4));
 
   double leftX = controller->GetX(frc::GenericHID::kLeftHand);
   double leftY = controller->GetY(frc::GenericHID::kLeftHand);
@@ -50,4 +50,36 @@ void DriveTrain::InvertMotors()
 {
   m_leftMotor.SetInverted(true);
   m_rightMotor.SetInverted(false);
+}
+
+void DriveTrain::MoveMotersFwd(double speed, double distanceIninchs)
+{
+  m_pLeftMotorEncoder->SetDistancePerPulse(1.0);
+  m_pRightMotorEncoder->SetDistancePerPulse(1.0);
+
+  m_rightMotor.Set(speed);
+  m_leftMotor.Set(speed);
+
+  bool isLeftWheelAtDistance = (m_pLeftMotorEncoder->GetDistance()/25.4) < distanceIninchs;
+  bool isRightWheelAtDistance = (m_pRightMotorEncoder->GetDistance()/25.4) < distanceIninchs;
+  while((isLeftWheelAtDistance) && (isRightWheelAtDistance)) 
+  {
+    isLeftWheelAtDistance = (m_pLeftMotorEncoder->GetDistance()/25.4) < distanceIninchs;
+    isRightWheelAtDistance = (m_pRightMotorEncoder->GetDistance()/25.4) < distanceIninchs;
+  }
+  StopDriveMotors();
+}
+
+void DriveTrain::MoveMotersTurn(double angle, double speed)
+{
+  //Change rate during debuging 
+  double rate = 1;
+  double Time = angle/rate;
+
+  m_leftMotor.Set(speed);
+  m_rightMotor.Set(-speed);
+
+  Wait(Time);
+
+  StopDriveMotors();
 }
