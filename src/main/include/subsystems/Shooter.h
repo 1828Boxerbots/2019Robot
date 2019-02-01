@@ -13,6 +13,9 @@
 #include <frc/Encoder.h>
 #include "RobotMap.h"
 #include "Util.h"
+#include <frc/AnalogInput.h>
+#include <frc/AnalogTrigger.h>
+#include <frc/Counter.h>
 
 using namespace frc;
 
@@ -20,11 +23,16 @@ class Shooter : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-Spark m_shooterPickupTop{SHOOTER_PICKUP_TOP};
-Spark m_shooterPickupBottom{SHOOTER_PICKUP_BOTTOM};
-Spark m_shooterAim{SHOOTER_WINDOW_MOTOR};
+Spark m_shooterPickupLeft{SHOOTER_PICKUP_LEFT};
+Spark m_shooterPickupRight{SHOOTER_PICKUP_RIGHT};
 
-Encoder *m_pShooterEncoder = new Encoder(SHOOTER_ENCODER_CHANNELA, SHOOTER_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
+Spark m_shooterMotor {SHOOTER_WINDOW_MOTOR};
+AnalogTrigger m_shooterEncoder {SHOOTER_ENCODER};
+Counter* m_counter;
+
+int m_previousCounterPosition= 0;
+
+int m_Position;
 
 Util m_util;
 int m_joystickpress = 0;
@@ -37,5 +45,8 @@ int m_joystickpress = 0;
   void TeleopPickUp(XboxController* controller);
   void SetAngle(XboxController* controller);
   void StopMotors();
+  double CheckDirectionChange(XboxController* controller);
+	int GetPosition();
+  void Intialize();
 
 };

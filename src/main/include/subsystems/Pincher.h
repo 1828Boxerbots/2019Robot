@@ -8,28 +8,26 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/Spark.h>
-#include <frc/XboxController.h>
-#include <frc/Encoder.h>
+#include <frc/Servo.h>
 #include "RobotMap.h"
+#include <frc/XboxController.h>
 #include "Util.h"
 
 using namespace frc;
-class DriveTrain : public frc::Subsystem {
+class Pincher : public frc::Subsystem 
+{
  private:
-  
-  Encoder m_leftMotorEncoder {LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
-  Encoder m_rightMotorEncoder {RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
-  Spark m_leftMotor {LEFTMOTOR};
-  Spark m_rightMotor {RIGHTMOTOR};
-  Util util;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+Util m_util;
+Servo m_servoPincher {PINCHER_SERVO};
+
+int m_joystickpress = 0;
 
  public:
-  DriveTrain();
+  Pincher();
   void InitDefaultCommand() override;
-  void TeleopDrive(XboxController* controller);
-  void StopDriveMotors();
-  void InvertMotors();
+  void TeleOpPincher(XboxController* pController);
+  void AutoOpen();
+  void AutoClose();
 };

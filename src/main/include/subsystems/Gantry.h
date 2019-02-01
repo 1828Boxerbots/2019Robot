@@ -12,24 +12,26 @@
 #include <frc/XboxController.h>
 #include <frc/Encoder.h>
 #include "RobotMap.h"
-#include "Util.h"
+#include <frc/DigitalInput.h>
 
 using namespace frc;
-class DriveTrain : public frc::Subsystem {
+class Gantry : public frc::Subsystem 
+{
  private:
-  
-  Encoder m_leftMotorEncoder {LEFT_ENCODER_CHANNEL_A, LEFT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
-  Encoder m_rightMotorEncoder {RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
-  Spark m_leftMotor {LEFTMOTOR};
-  Spark m_rightMotor {RIGHTMOTOR};
-  Util util;
-  // It's desirable that everything possible under private except
-  // for methods that implement subsystem capabilities
+  Spark m_gantryMotorLeft{LEFT_GANTRY_MOTOR};
+  Spark m_gantryMotorRight{RIGHT_GANTRY_MOTOR};
+  DigitalInput m_topLimit{TOP_LIMIT};
+  DigitalInput m_bottomLimit{BOTTOM_LIMIT};
 
+  Encoder m_pGantryEncoder{GANTRY_ENCODER_CHANNEL_A, GANTRY_ENCODER_CHANNEL_B, false, Encoder::EncodingType::k4X};
+  void MoveUp();
+  void MoveDown();
+  void StopMotors();
+  
  public:
-  DriveTrain();
+  Gantry();
+  void MoveUntilPosition(double targetposition);
   void InitDefaultCommand() override;
-  void TeleopDrive(XboxController* controller);
-  void StopDriveMotors();
+  void TeleopGantry(XboxController* pController);
   void InvertMotors();
 };

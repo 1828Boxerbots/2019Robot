@@ -19,13 +19,15 @@ ShooterCMD::ShooterCMD()
 void ShooterCMD::Initialize() 
 {
   Robot::m_shooter->InvertMotorsPickUp();
+  Robot::m_shooter->Intialize();
 }
 
 // Called repeatedly when this Command is scheduled to run
 void ShooterCMD::Execute() 
 {
-  Robot::m_shooter->TeleopPickup(Robot::m_oi.GetController());
+  Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
   Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
+  Robot::m_shooter->GetPosition();
 }
 
 // Make this return true when this Command no longer needs to run execute()
@@ -34,7 +36,7 @@ bool ShooterCMD::IsFinished() { return false; }
 // Called once after isFinished returns true
 void ShooterCMD::End() 
 {
-  Robot::m_shooter->StopMotor();
+  Robot::m_shooter->StopMotors();
 }
 
 // Called when another command which requires one or more of the same

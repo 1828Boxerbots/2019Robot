@@ -5,15 +5,11 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
+#include "commands/AutoCMD.h"
+void AutoCMD::AutoOne()
+{
+    AutoInitialCMD();
+    //Do unique commands for position one
+    //TBD
 
-class OI {
-  private:
-  XboxController controller {XBOXCONTROLLER_USB};
- public:
-  XboxController* GetController();
-  OI();
-};
+}
