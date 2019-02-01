@@ -5,40 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/DriveTrainCMD.h"
+#include "commands/PincherCMD.h"
 #include "Robot.h"
+#include "OI.h"
 
-
-DriveTrainCMD::DriveTrainCMD() 
+PincherCMD::PincherCMD() 
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_driveTrain.get());
+  Requires(Robot::m_pincher.get());
 }
+
 // Called just before this Command runs the first time
-void DriveTrainCMD::Initialize() 
-{
-  Robot::m_driveTrain->StopDriveMotors();
-  Robot::m_driveTrain->InvertMotors();
-}
+void PincherCMD::Initialize() {}
+
 // Called repeatedly when this Command is scheduled to run
-void DriveTrainCMD::Execute() 
+void PincherCMD::Execute() 
 {
-Robot::m_driveTrain->TeleopDrive(Robot::m_oi.GetController());
+  Robot::m_pincher->TeleOpPincher(Robot::m_oi.GetController());
 }
+
 // Make this return true when this Command no longer needs to run execute()
-bool DriveTrainCMD::IsFinished() 
-{ 
-  return false; 
-}
+bool PincherCMD::IsFinished() { return false; }
+
 // Called once after isFinished returns true
-void DriveTrainCMD::End() 
-{
-  Robot::m_driveTrain->StopDriveMotors();
-}
+void PincherCMD::End() {}
+
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void DriveTrainCMD::Interrupted() 
-{
-
-}
+void PincherCMD::Interrupted() {}

@@ -5,15 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "OI.h"
-
-//#include <frc/WPILib.h>
-
-XboxController* OI::GetController()
+#include "commands/AutoCMD.h"
+#include "Robot.h"
+void AutoCMD::AutoThree()
 {
-  return &controller;
-}
-OI::OI()
-{
-  // Process operator interface input here.
+    AutoInitialCMD();
+    //Do unique commands for position one
+    //TBD
+    Robot::m_driveTrain->DriveForward(20);
+
+    Robot::m_driveTrain->TurnRight(90);
+
+    Robot::m_driveTrain->DriveForward(40);
+
+    Robot::m_driveTrain->TurnLeft(63);
+
+    Robot::m_driveTrain->DriveForward(30);
+
+    Robot::m_driveTrain->DriveForward(5);
+
+    Robot::m_pincher->AutoClose();
+
+    Robot::m_driveTrain->DriveBackward(10);
 }

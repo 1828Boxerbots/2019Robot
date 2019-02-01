@@ -5,15 +5,23 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
+#include "commands/AutoCMD.h"
+#include "Robot.h"
 
-class OI {
-  private:
-  XboxController controller {XBOXCONTROLLER_USB};
- public:
-  XboxController* GetController();
-  OI();
-};
+void AutoCMD::AutoInitialCMD()
+{
+    // move fork fowards
+    Robot::m_arm->ArmUp();
+
+    //Lift gantry
+    Robot::m_gantry->MoveToStandardLevel();
+
+    //Move fork backwards
+    Robot::m_arm->ArmDown();
+
+    //Open Peg
+    Robot::m_pincher->AutoOpen();
+
+    //move gantry to first level
+    Robot::m_gantry->MoveToLevelOne();
+}

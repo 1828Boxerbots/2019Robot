@@ -5,15 +5,26 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
+#include "commands/AutoCMD.h"
+#include "Robot.h"
+void AutoCMD::AutoOne()
+{
+    AutoInitialCMD();
+    //Do unique commands for position one
+    //TBD
+    Robot::m_driveTrain->DriveForward(20);
 
-class OI {
-  private:
-  XboxController controller {XBOXCONTROLLER_USB};
- public:
-  XboxController* GetController();
-  OI();
-};
+    Robot::m_driveTrain->TurnLeft(90);
+
+    Robot::m_driveTrain->DriveForward(40);
+
+    Robot::m_driveTrain->TurnRight(63);
+
+    Robot::m_driveTrain->DriveForward(30);
+
+    Robot::m_driveTrain->DriveForward(5);
+
+    Robot::m_pincher->AutoClose();
+
+    Robot::m_driveTrain->DriveBackward(10);
+}

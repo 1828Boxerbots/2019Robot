@@ -6,14 +6,29 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
 
-class OI {
+#include <frc/commands/Command.h>
+
+class AutoCMD : public frc::Command 
+{
+  // member variables
+ private:
+  bool m_auto = false;
+  int m_fieldPosition = -1;
+
+// public functions
+public:
+  AutoCMD();
+  void AutoOne();
+  void AutoTwo();
+  void AutoThree();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
+
+// private functions
   private:
-  XboxController controller {XBOXCONTROLLER_USB};
- public:
-  XboxController* GetController();
-  OI();
+  void AutoInitialCMD();
 };

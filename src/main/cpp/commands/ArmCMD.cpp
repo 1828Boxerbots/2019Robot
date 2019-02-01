@@ -5,9 +5,10 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/Arm.h"
+#include "commands/ArmCMD.h"
+#include "Robot.h"
 
-Arm::Arm() 
+ArmCMD::ArmCMD() 
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
@@ -15,23 +16,25 @@ Arm::Arm()
 }
 
 // Called just before this Command runs the first time
-void Arm::Initialize() 
+void ArmCMD::Initialize() 
 {
   Robot::m_arm->InvertMotors();
+  Robot::m_arm->Intialize();
 }
 
 // Called repeatedly when this Command is scheduled to run
-void Arm::Execute() 
+void ArmCMD::Execute() 
 {
   Robot::m_arm->TeleopArm(Robot::m_oi.GetController());
+  Robot::m_arm->GetPosition();
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool Arm::IsFinished() { return false; }
+bool ArmCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void Arm::End() {}
+void ArmCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void Arm::Interrupted() {}
+void ArmCMD::Interrupted() {}

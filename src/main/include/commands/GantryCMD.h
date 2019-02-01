@@ -6,14 +6,15 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
 
-class OI {
-  private:
-  XboxController controller {XBOXCONTROLLER_USB};
+#include <frc/commands/Command.h>
+
+class GantryCMD : public frc::Command {
  public:
-  XboxController* GetController();
-  OI();
+  GantryCMD();
+  void Initialize() override;
+  void Execute() override;
+  bool IsFinished() override;
+  void End() override;
+  void Interrupted() override;
 };

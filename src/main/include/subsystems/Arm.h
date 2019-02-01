@@ -11,9 +11,11 @@
 #include <frc/Spark.h>
 #include <frc/XboxController.h>
 #include <frc/Encoder.h>
-#include <frc/XboxController.h>
-#include "Util.h"
 #include "RobotMap.h"
+#include "Util.h"
+#include <frc/AnalogInput.h>
+#include <frc/AnalogTrigger.h>
+#include <frc/Counter.h>
 
 using namespace frc;
 class Arm : public frc::Subsystem 
@@ -22,9 +24,12 @@ class Arm : public frc::Subsystem
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
   Spark m_arm {ARM_MOTOR};
+  AnalogTrigger m_armEncoder {ARM_ENCODER};
+  Counter* m_counter;
 
-  Encoder *m_pArmEncoder = new Encoder(SHOOTER_ENCODER_CHANNELA, SHOOTER_ENCODER_CHANNELB, false, Encoder::EncodingType::k4X);
+  int m_previousCounterPosition = 0;
 
+  int m_Position;
 
   Util m_util;
   int m_joystickpress = 0;
@@ -34,4 +39,9 @@ class Arm : public frc::Subsystem
   void InitDefaultCommand() override;
   void InvertMotors();
   void TeleopArm(XboxController *pController);
+	int GetPosition();
+  void Intialize();
+  //moves the arm to either 90 degrees or 0 degrees
+  void ArmUp();
+  void ArmDown();
 };

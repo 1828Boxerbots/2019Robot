@@ -6,14 +6,28 @@
 /*----------------------------------------------------------------------------*/
 
 #pragma once
-#include <frc/XboxController.h>
-#include "RobotMap.h"
-using namespace frc;
 
-class OI {
-  private:
-  XboxController controller {XBOXCONTROLLER_USB};
+#include <frc/commands/Subsystem.h>
+#include <frc/Servo.h>
+#include "RobotMap.h"
+#include <frc/XboxController.h>
+#include "Util.h"
+
+using namespace frc;
+class Pincher : public frc::Subsystem 
+{
+ private:
+  // It's desirable that everything possible under private except
+  // for methods that implement subsystem capabilities
+Util m_util;
+Servo m_servoPincher {PINCHER_SERVO};
+
+int m_joystickpress = 0;
+
  public:
-  XboxController* GetController();
-  OI();
+  Pincher();
+  void InitDefaultCommand() override;
+  void TeleOpPincher(XboxController* pController);
+  void AutoOpen();
+  void AutoClose();
 };

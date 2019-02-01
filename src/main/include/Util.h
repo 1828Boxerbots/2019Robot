@@ -10,8 +10,8 @@
 class Util
 {
 public:
-  Util();
-  ~Util();
+  Util(){}
+  ~Util(){}
 
   double Limit(double upperlimit, double lowerlimit, double value);
 
