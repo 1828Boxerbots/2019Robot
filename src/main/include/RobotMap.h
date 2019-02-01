@@ -37,3 +37,6 @@ constexpr int XBOXCONTROLLER_USB = 0;
 //Analog
 constexpr int SHOOTER_ENCODER = 0;
 constexpr int ARM_ENCODER = 1;
+
+//SPI
+constexpr int GYROPORT = 0;

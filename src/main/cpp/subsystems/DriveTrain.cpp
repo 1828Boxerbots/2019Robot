@@ -54,6 +54,64 @@ void DriveTrain::InvertMotors()
   m_leftMotor.SetInverted(false);
   m_rightMotor.SetInverted(true);
 }
+void DriveTrain::DriveForward(double distance)
+{
+  double wheelRadius = 3;
+  m_leftMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
+  double LeftDistance = m_leftMotorEncoder.GetDistance();
+  if (LeftDistance < distance)
+  {
+    m_leftMotor.Set(0.65);
+    m_rightMotor.Set(0.65);
+  }
+  else
+  {
+    StopDriveMotors();
+  }
+}
+void DriveTrain::DriveBackward(double distance)
+{
+  {
+  double wheelRadius = 3;
+  m_leftMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
+  double LeftDistance = m_leftMotorEncoder.GetDistance();
+  if (LeftDistance < distance)
+  {
+    m_leftMotor.Set(-0.65);
+    m_rightMotor.Set(-0.65);
+  }
+  else
+  {
+    StopDriveMotors();
+  }
+}
+}
+void DriveTrain::TurnRight(double degree)
+{
+  double angle = m_gyro.GetX();
+  if (angle < degree)
+  {
+    m_leftMotor.Set(0.65);
+    m_rightMotor.Set(-0.65);
+  }
+  else
+  {
+    StopDriveMotors();
+  }
+}
+void DriveTrain::TurnLeft(double degree)
+{
+  double angle = m_gyro.GetX();
+  if (angle < degree)
+  {
+    m_leftMotor.Set(-0.65);
+    m_rightMotor.Set(0.65);
+  }
+  else
+  {
+    StopDriveMotors();
+  }
+}
 
 // Put methods for controlling this subsystem
 // here. Call these from Commands.

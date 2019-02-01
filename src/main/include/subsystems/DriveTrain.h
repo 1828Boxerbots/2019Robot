@@ -13,6 +13,7 @@
 #include <frc/Encoder.h>
 #include "RobotMap.h"
 #include "Util.h"
+#include <frc/ADXL345_SPI.h>
 
 using namespace frc;
 class DriveTrain : public frc::Subsystem {
@@ -22,6 +23,8 @@ class DriveTrain : public frc::Subsystem {
   Encoder m_rightMotorEncoder {RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
   Spark m_leftMotor {LEFTMOTOR};
   Spark m_rightMotor {RIGHTMOTOR};
+  ADXL345_SPI m_gyro {GYROPORT};
+
   Util util;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
@@ -32,4 +35,8 @@ class DriveTrain : public frc::Subsystem {
   void TeleopDrive(XboxController* controller);
   void StopDriveMotors();
   void InvertMotors();
+  void DriveForward(double distance);
+  void DriveBackward (double distance);
+  void TurnRight(double degree);
+  void TurnLeft(double degree);
 };
