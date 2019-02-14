@@ -8,13 +8,16 @@
 #pragma once
 
 #include <frc/commands/Command.h>
+#include <frc/SmartDashboard/SendableChooser.h>
 
 class AutoCMD : public frc::Command 
 {
   // member variables
  private:
-  bool m_auto = false;
-  int m_fieldPosition = -1;
+
+  static bool m_isRunning;
+public:
+  static int m_count;
 
 // public functions
 public:
@@ -27,6 +30,8 @@ public:
   bool IsFinished() override;
   void End() override;
   void Interrupted() override;
+
+  
 
 // private functions
   private:

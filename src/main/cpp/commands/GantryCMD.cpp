@@ -19,7 +19,7 @@ GantryCMD::GantryCMD()
 // Called just before this Command runs the first time
 void GantryCMD::Initialize() 
 {
-
+Robot::m_gantry->InvertMotors();
 }
 
 // Called repeatedly when this Command is scheduled to run

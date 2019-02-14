@@ -30,8 +30,10 @@ Spark m_shooterMotor {SHOOTER_WINDOW_MOTOR};
 AnalogTrigger m_shooterEncoder {SHOOTER_ENCODER};
 Counter* m_counter;
 
+int m_frame = 0;
 int m_previousCounterPosition= 0;
 
+float m_speedPrevious;
 int m_Position;
 
 Util m_util;

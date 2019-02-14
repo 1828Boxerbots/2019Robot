@@ -27,7 +27,9 @@ void ShooterCMD::Execute()
 {
   Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
   Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
+  Robot::m_shooter->CheckDirectionChange(Robot::m_oi.GetController());
   Robot::m_shooter->GetPosition();
+
 }
 
 // Make this return true when this Command no longer needs to run execute()

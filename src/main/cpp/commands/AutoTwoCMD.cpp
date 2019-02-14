@@ -12,11 +12,12 @@ void AutoCMD::AutoTwo()
     AutoInitialCMD();
     //Do unique commands for position one
     //TBD
+    /*
     Robot::m_driveTrain->DriveForward(20);
 
-    Robot::m_driveTrain->TurnLeft(90);
+    Robot::m_driveTrain->TurnLeft(-90);
 
-    Robot::m_driveTrain->DriveForward(40);
+    Robot::m_driveTrain->DriveForward(60);
 
     Robot::m_driveTrain->TurnRight(63);
 
@@ -27,4 +28,5 @@ void AutoCMD::AutoTwo()
     Robot::m_pincher->AutoClose();
 
     Robot::m_driveTrain->DriveBackward(10);
+    */
 }

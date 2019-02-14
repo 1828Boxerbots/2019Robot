@@ -13,7 +13,7 @@
 #include <frc/Encoder.h>
 #include "RobotMap.h"
 #include "Util.h"
-#include <frc/ADXL345_SPI.h>
+#include <frc/ADXRS450_Gyro.h>
 
 using namespace frc;
 class DriveTrain : public frc::Subsystem {
@@ -23,11 +23,16 @@ class DriveTrain : public frc::Subsystem {
   Encoder m_rightMotorEncoder {RIGHT_ENCODER_CHANNEL_A, RIGHT_ENCODER_CHANNEL_B, false , Encoder::EncodingType::k4X};
   Spark m_leftMotor {LEFTMOTOR};
   Spark m_rightMotor {RIGHTMOTOR};
-  ADXL345_SPI m_gyro {GYROPORT};
+
+  static constexpr double kAngleSetpoint = 0.0;
+	static constexpr double kP = 0.005;
+
+  ADXRS450_Gyro m_gyro {SPI::Port::kOnboardCS0};
 
   Util util;
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
+
 
  public:
   DriveTrain();
@@ -39,4 +44,5 @@ class DriveTrain : public frc::Subsystem {
   void DriveBackward (double distance);
   void TurnRight(double degree);
   void TurnLeft(double degree);
+  void CalibrateGyro();
 };

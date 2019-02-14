@@ -12,34 +12,37 @@
 #include <frc/SmartDashboard/SmartDashboard.h>
 
 using namespace frc;
-Gantry::Gantry() : Subsystem("Gantry") 
-{
-  
-}
+Gantry::Gantry() : Subsystem("Gantry") {}
+
 void Gantry::InvertMotors()
 {
-  m_gantryMotorLeft.SetInverted(true);
-  m_gantryMotorRight.SetInverted(false);
+  m_gantryMotor.SetInverted(true);
 }
 
 void Gantry::TeleopGantry(XboxController* pController)
-{
+{   
+    bool limitValue = m_bottomLimit.Get();
+    SmartDashboard::PutBoolean("Bottom Limit", limitValue);
+
+    double winchRadius = 1;
+    m_pGantryEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * winchRadius);
+    SmartDashboard::PutNumber("Gantry Encoder", m_pGantryEncoder.GetDistance());
     //Hooks up the bumper variables to the actual bumpers on the controller
     bool rightBumper = pController->GetBumper(GenericHID::kRightHand);
     bool leftBumper = pController->GetBumper(GenericHID::kLeftHand);
-    if(rightBumper == true && leftBumper == false)
+    if (((rightBumper == true) && (leftBumper == true)) || ((rightBumper == false) && (leftBumper == false)))
     {
-       MoveUp();
+        m_gantryMotor.Set(0);
     }
     else
     {
-        if(leftBumper == true && rightBumper == false)
+        if(rightBumper == true)
+        {
+            MoveUp();
+        }
+        if(leftBumper == true)
         {
             MoveDown();
-        }
-        else
-        {
-            StopMotors();
         }
     }
 }
@@ -53,28 +56,25 @@ void Gantry::InitDefaultCommand()
 void Gantry::MoveUp()
 {
     //When the right bumper is pressed, move gantry up
-    if (m_topLimit.Get() == true)
+    /*if (m_topLimit.Get() == true)
     {
         return;
-    }
-    m_gantryMotorLeft.Set(0.5);
-    m_gantryMotorRight.Set(0.5);
+    }*/
+    m_gantryMotor.Set(1);
 }
 void Gantry::MoveDown()
 {
     //When the left bumper is pressed, move gantry down
-    if (m_bottomLimit.Get() == true)
+    /*if (m_bottomLimit.Get() == true)
     {
         return;
-    }
-    m_gantryMotorLeft.Set(-0.5);
-    m_gantryMotorRight.Set(-0.5);
+    }*/
+    m_gantryMotor.Set(-.25);
 }
 void Gantry::StopMotors()
 {
     //stop both motors
-    m_gantryMotorLeft.Set(0.0);
-    m_gantryMotorRight.Set(0.0);
+    m_gantryMotor.Set(0.0);
 }
 void Gantry::MoveToStandardLevel()
 {

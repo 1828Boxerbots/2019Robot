@@ -31,11 +31,10 @@ class Gantry : public frc::Subsystem
 
 
  private:
-  Spark m_gantryMotorLeft{LEFT_GANTRY_MOTOR};
-  Spark m_gantryMotorRight{RIGHT_GANTRY_MOTOR};
+  Spark m_gantryMotor{GANTRY_MOTOR};
   DigitalInput m_topLimit{TOP_LIMIT};
   DigitalInput m_bottomLimit{BOTTOM_LIMIT};
-
+  
   Encoder m_pGantryEncoder{GANTRY_ENCODER_CHANNEL_A, GANTRY_ENCODER_CHANNEL_B, false, Encoder::EncodingType::k4X};
 
   void MoveUp();

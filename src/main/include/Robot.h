@@ -10,13 +10,16 @@
 #include <frc/TimedRobot.h>
 #include <frc/commands/Command.h>
 #include <frc/smartdashboard/SendableChooser.h>
+#include <networktables/NetworkTableEntry.h>
+#include <networktables/NetworkTableInstance.h>
+#include <frc/ADXRS450_Gyro.h>
 
 #include "OI.h"
 
 #include "commands/DriveTrainCMD.h"
 #include "commands/ShooterCMD.h"
 #include "commands/ArmCMD.h"
-//#include "commands/AutoCMD.h"
+#include "commands/AutoCMD.h"
 #include "commands/GantryCMD.h"
 #include "commands/PincherCMD.h"
 
@@ -27,6 +30,7 @@
 #include "subsystems/Gantry.h"
 
 using namespace frc;
+using namespace std;
 
 class Robot : public frc::TimedRobot 
 {
@@ -52,11 +56,16 @@ class Robot : public frc::TimedRobot
  private:
   // Have it null by default so that if testing teleop it
   // doesn't have undefined behavior and potentially crash.
+  SendableChooser<std::string> m_autoPositon;
+  //SendableChooser<bool> m_autoMode;
+  int m_int;
+
+  nt::NetworkTableEntry m_autoMode;
 
   DriveTrainCMD m_driveTrainCMD;
   ShooterCMD m_shooterCMD;
   ArmCMD m_armCMD;
   PincherCMD m_pincherCMD;
-  //AutoCMD m_autoCMD;
+  AutoCMD m_autoCMD;
   GantryCMD m_gantryCMD;
 };

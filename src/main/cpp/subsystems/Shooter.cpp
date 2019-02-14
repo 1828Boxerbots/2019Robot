@@ -24,6 +24,29 @@ void Shooter::Intialize()
   m_previousCounterPosition = m_counter->Get();
 }
 
+double Shooter::CheckDirectionChange(XboxController* controller)
+{
+  /*
+  double currentDirection = -m_shooterMotor.Get();
+  SmartDashboard::PutNumber("Current Direction", currentDirection);
+  bool triggerState = m_shooterEncoder.GetTriggerState();
+  SmartDashboard::PutBoolean("Trigger State", triggerState);
+	// update position accumulator if changing direction
+	// encoder doesn't know the direction so we have to remember the direction for it
+  
+	if ((currentDirection > 0) || (currentDirection < 0))
+	{
+		m_Position = GetPosition(); // changing directions so save what we have
+		m_counter->Reset(); // and start counting in the new direction
+	  currentDirection; // return input speed for ease of use (may include it in the Set() argument => Set(CheckDirectionChange(speed)))
+	}
+  else
+  {
+		return currentDirection;
+  }
+  */
+}
+
 int Shooter::GetPosition()
 {
   double currentDirection = -m_shooterMotor.Get(); 
@@ -51,32 +74,7 @@ int Shooter::GetPosition()
 
 void Shooter::SetAngle(XboxController* controller)
 {
-  int shooterTick = m_Position;
-
   m_shooterMotor.Set(controller->GetY(GenericHID::kRightHand));
-
-  //get button state (true or false)
-  bool xButton = controller->GetXButton();
-  bool aButton = controller->GetAButton();
-  // this is setting angle to tick numbers
-  const double ANGLE_45 = 21.0;
-  const double ANGLE_90 = 43.0;
-  // set the target tick number to the angle we want
-  double position = m_util.ToggleSwitch(xButton, aButton, ANGLE_45, ANGLE_90, true, &m_joystickpress);
-  //if the current tick read is less than target then set motor either foward or backwards 
-  if (shooterTick < position)
-  {
-    m_shooterMotor.Set(0.75);
-  }
-  else
-  {
-    m_shooterMotor.Set(-0.75);
-  }
-  // stop the motor if it is in the range
-  if ((shooterTick < position-1.0) || (shooterTick > position+1.0))
-  {
-    m_shooterMotor.Set(0);
-  }
 }
 void Shooter::TeleopPickUp(XboxController* controller)
 {

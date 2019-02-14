@@ -9,13 +9,20 @@
 #include "Robot.h"
 void AutoCMD::AutoOne()
 {
-    AutoInitialCMD();
-    //Do unique commands for position one
-    //TBD
-    Robot::m_driveTrain->DriveForward(20);
+    if (m_isRunning == true)
+    {
+        return;
+    }
+    m_isRunning = true;
+    Robot::m_driveTrain->InvertMotors();
+    //AutoInitialCMD();
 
-    Robot::m_driveTrain->TurnLeft(90);
-
+    //Drive Forward in inches
+    //Robot::m_driveTrain->DriveForward(10);  
+    
+    //Turn left in degrees
+    //Robot::m_driveTrain->TurnRight(90);
+    /*
     Robot::m_driveTrain->DriveForward(40);
 
     Robot::m_driveTrain->TurnRight(63);
@@ -27,4 +34,7 @@ void AutoCMD::AutoOne()
     Robot::m_pincher->AutoClose();
 
     Robot::m_driveTrain->DriveBackward(10);
+    */
+   //Robot::m_driveTrain->StopDriveMotors();
+    m_isRunning = false;
 }
