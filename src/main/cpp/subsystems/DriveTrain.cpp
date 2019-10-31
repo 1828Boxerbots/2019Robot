@@ -25,16 +25,18 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double leftX = controller->GetX(frc::GenericHID::kLeftHand);
   double leftY = controller->GetY(frc::GenericHID::kLeftHand);
 
-  double rightoverallValue = leftX + leftY;
-  double leftoverallValue = leftX + leftY;
+  double rightoverallValue = -leftY - leftX;
+  double leftoverallValue = leftX - leftY;
 
   double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
   double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
 
+
+  /* There seems to be an issue with Laika moving on her own. These
+  if statements are here as a temporary fix to the problem.*/
   m_leftMotor.Set(limitedLeftOverallValue);
   m_rightMotor.Set(limitedRightOverallValue);
 }
-
 void DriveTrain::InitDefaultCommand() 
 {
   // Set the default command for a subsystem here.
