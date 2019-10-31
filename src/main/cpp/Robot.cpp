@@ -144,7 +144,7 @@ void Robot::TeleopInit()
   // continue until interrupted by another command, remove
   // this line or comment it out.ks
   m_driveTrainCMD.Start();
-  m_shooterCMD.Start();
+  //m_shooterCMD.Start();
   m_armCMD.Start();
   m_pincherCMD.Start();
   m_gantryCMD.Start();
