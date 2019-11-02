@@ -25,11 +25,11 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double leftX = controller->GetX(frc::GenericHID::kLeftHand);
   double leftY = controller->GetY(frc::GenericHID::kLeftHand);
 
-  double rightoverallValue = -leftY - leftX;
-  double leftoverallValue = leftX - leftY;
+  double rightoverallValue = -leftY + (leftX/2);
+  double leftoverallValue = -(leftX/2) - leftY;
 
-  double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
-  double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
+  double limitedRightOverallValue = util.Limit(.5, -.5, rightoverallValue);
+  double limitedLeftOverallValue = util.Limit(.5, -.5, leftoverallValue);
 
 
   /* There seems to be an issue with Laika moving on her own. These
