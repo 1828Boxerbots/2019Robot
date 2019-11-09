@@ -7,8 +7,8 @@
 
 #pragma once
 //PWM
-constexpr int LEFTMOTOR = 2;
-constexpr int RIGHTMOTOR = 6;
+constexpr int LEFTMOTOR = 6;
+constexpr int RIGHTMOTOR = 2;
 constexpr int SHOOTER_WINDOW_MOTOR = 0;
 constexpr int SHOOTER_PICKUP_LEFT = 1;
 constexpr int SHOOTER_PICKUP_RIGHT = 5;

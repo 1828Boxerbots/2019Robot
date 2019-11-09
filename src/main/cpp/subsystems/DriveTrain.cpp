@@ -22,11 +22,11 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double RightDistance = m_rightMotorEncoder.GetDistance();
   SmartDashboard::PutNumber("m_rightMotorEncoder", (RightDistance/25.4));
 
-  double leftX = controller->GetX(frc::GenericHID::kLeftHand);
+  double rightY = controller->GetY(frc::GenericHID::kRightHand);
   double leftY = controller->GetY(frc::GenericHID::kLeftHand);
 
-  double rightoverallValue = -leftY - leftX;
-  double leftoverallValue = leftX - leftY;
+  double rightoverallValue = rightY;
+  double leftoverallValue = leftY;
 
   double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
   double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
