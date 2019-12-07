@@ -25,8 +25,7 @@ Robot::m_gantry->InvertMotors();
 // Called repeatedly when this Command is scheduled to run
 void GantryCMD::Execute() 
 {
-  //commented out because gantry doesn't work mechanically
-  //Robot::m_gantry->TeleopGantry(Robot::m_oi.GetController());
+  Robot::m_gantry->TeleopGantry(Robot::m_oi.GetController());
 }
 
 // Make this return true when this Command no longer needs to run execute()

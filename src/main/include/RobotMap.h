@@ -7,12 +7,12 @@
 
 #pragma once
 //PWM
-constexpr int LEFTMOTOR = 6;
-constexpr int RIGHTMOTOR = 2;
+constexpr int LEFTMOTOR = 2;
+constexpr int RIGHTMOTOR = 6;
 constexpr int SHOOTER_WINDOW_MOTOR = 0;
 constexpr int SHOOTER_PICKUP_LEFT = 1;
 constexpr int SHOOTER_PICKUP_RIGHT = 5;
-constexpr int ARM_MOTOR = 10;
+constexpr int ARM_MOTOR = 4;
 constexpr int GANTRY_MOTOR = 7;
 constexpr int PINCHER_SERVO = 3;
 

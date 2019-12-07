@@ -23,11 +23,11 @@ void AutoCMD::AutoOne()
     //Turn left in degrees
     //Robot::m_driveTrain->TurnRight(90);
     /*
-    Robot::m_driveTrain->DriveForward(40);
+    Robot::m_driveTrain->DriveForward(40); */
 
-    Robot::m_driveTrain->TurnRight(63);
+    Robot::m_driveTrain->TurnLeft(63); /*
 
-    Robot::m_driveTrain->DriveForward(30);
+    Robot::m_driveTrain->DriveForward(30); 
 
     Robot::m_driveTrain->DriveForward(5);
 

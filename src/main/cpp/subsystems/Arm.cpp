@@ -64,11 +64,11 @@ void Arm::TeleopArm (XboxController *pController)
 
   if (armTick < position)
   {
-    m_arm.Set(0.75);
+    m_arm.Set(0.15);
   }
   else
   {
-    m_arm.Set(-0.75);
+    m_arm.Set(-0.15);
   }
   // stop the motor if it is in the range
   if ((armTick < position-1.0) || (armTick > position+1.0))
@@ -82,11 +82,11 @@ void Arm::ArmUp()
   const double zeroDegree = 0.0;
   if (armTick > zeroDegree)
   {
-    m_arm.Set(0.7);
+    m_arm.Set(0.1);
   }
   else
   {
-    m_arm.Set(.07);
+    m_arm.Set(.1);
   }
 }
 void Arm::ArmDown()
@@ -95,7 +95,7 @@ void Arm::ArmDown()
   const double ninetyDegree = 43.0;
   if (armTick < ninetyDegree)
   {
-    m_arm.Set(-0.7);
+    m_arm.Set(-0.1);
   }
   else
   {

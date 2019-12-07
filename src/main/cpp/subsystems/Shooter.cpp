@@ -74,7 +74,7 @@ int Shooter::GetPosition()
 
 void Shooter::SetAngle(XboxController* controller)
 {
-  m_shooterMotor.Set(controller->GetY(GenericHID::kRightHand));
+  m_shooterMotor.Set((controller->GetY(GenericHID::kRightHand)/2));
 }
 void Shooter::TeleopPickUp(XboxController* controller)
 {

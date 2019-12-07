@@ -22,21 +22,24 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double RightDistance = m_rightMotorEncoder.GetDistance();
   SmartDashboard::PutNumber("m_rightMotorEncoder", (RightDistance/25.4));
 
-  double rightY = controller->GetY(frc::GenericHID::kRightHand);
-  double leftY = controller->GetY(frc::GenericHID::kLeftHand);
+  double leftX = controller->GetY(frc::GenericHID::kLeftHand);
+  double leftY = controller->GetX(frc::GenericHID::kLeftHand);
 
-  double rightoverallValue = rightY;
-  double leftoverallValue = leftY;
+  double rightoverallValue = leftX + leftY;
+  double leftoverallValue = leftX - leftY;
 
   double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
   double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
 
-
-  /* There seems to be an issue with Laika moving on her own. These
-  if statements are here as a temporary fix to the problem.*/
   m_leftMotor.Set(limitedLeftOverallValue);
   m_rightMotor.Set(limitedRightOverallValue);
+
+  double angle = m_gyro.GetAngle();
+  SmartDashboard::PutNumber("Gyro Angle",angle);
+  double rate = m_gyro.GetRate();
+  SmartDashboard::PutNumber("Gyro Rate",rate);
 }
+
 void DriveTrain::InitDefaultCommand() 
 {
   // Set the default command for a subsystem here.
@@ -98,36 +101,48 @@ void DriveTrain::DriveBackward(double distance)
 }
 void DriveTrain::TurnRight(double degree)
 {
-  double angle = 0;
-  degree = 45;
-  //m_gyro.GetAngle();
-  //Set motor to turn right
-  //m_leftMotor.Set(0.35);
-  //m_rightMotor.Set(-0.35);
+  double angle = 0.0;
+  degree = 10;
+ 
   //Wait until it reached the angle
+  SmartDashboard::PutBoolean("Motor Runnig", true);
   while(angle < degree)
   {
-    double angle2 = m_gyro.GetAngle();
+    angle = m_gyro.GetAngle();
     double turningValue = (kAngleSetpoint - m_gyro.GetAngle()) * kP;
-    SmartDashboard::PutNumber("Auto Angle", angle2);
+    SmartDashboard::PutNumber("Auto Angle", angle);
     SmartDashboard::PutNumber("Auto Angle Maybe", turningValue);
     SmartDashboard::PutNumber("Auto Angle Target", degree);
+  //Set motor to turn right
+    m_leftMotor.Set(0.35);
+     m_rightMotor.Set(-0.35);
+    
   }
   //Then stop motors
+  SmartDashboard::PutBoolean("Motor Runnig", false);
   StopDriveMotors();
 }
 void DriveTrain::TurnLeft(double degree)
 {
-  double angle = m_gyro.GetAngle();
-  //Set motor to turn left
-  m_leftMotor.Set(-0.65);
-  m_rightMotor.Set(0.65);
+ double angle = 0.0;
+  degree = -10;
+  SmartDashboard::PutNumber("Auto Angle Target", degree);
+ 
   //Wait until it reached the angle
-  while(angle < degree)
+  SmartDashboard::PutBoolean("Motor Runnig", true);
+  while(angle > degree)
   {
     angle = m_gyro.GetAngle();
+    SmartDashboard::PutNumber("Auto Angle", angle);
+
+    //double turningValue = (kAngleSetpoint - m_gyro.GetAngle()) * kP;
+    //SmartDashboard::PutNumber("Auto Angle Maybe", turningValue);
+ 
+    //Set motor to turn left
+    m_leftMotor.Set(-0.35);
+    m_rightMotor.Set(0.35);
   }
-  //Then stop motors
+  SmartDashboard::PutBoolean("Motor Runnig", false);
   StopDriveMotors();
 }
 void DriveTrain::CalibrateGyro()
