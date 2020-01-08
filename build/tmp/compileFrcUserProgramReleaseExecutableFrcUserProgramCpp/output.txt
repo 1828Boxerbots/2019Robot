@@ -1,0 +1,30 @@
+See file:///C:/Users/Adj3c/OneDrive/Documents/GitHub/LaikaCommandRobot/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt for all output for compileFrcUserProgramReleaseExecutableFrcUserProgramCpp.
+compiling ArmCMD.cpp successful.
+
+compiling OI.cpp successful.
+
+compiling AutoCMD.cpp successful.
+
+compiling Util.cpp successful.
+
+compiling DriveTrainCMD.cpp successful.
+
+compiling GantryCMD.cpp successful.
+
+compiling PincherCMD.cpp successful.
+
+compiling Pincher.cpp successful.
+
+compiling DriveTrain.cpp successful.
+
+compiling ShooterCMD.cpp successful.
+
+compiling Robot.cpp successful.
+
+compiling Gantry.cpp successful.
+
+compiling Shooter.cpp successful.
+
+compiling Arm.cpp successful.
+
+Finished compileFrcUserProgramReleaseExecutableFrcUserProgramCpp, see full log file:///C:/Users/Adj3c/OneDrive/Documents/GitHub/LaikaCommandRobot/build/tmp/compileFrcUserProgramReleaseExecutableFrcUserProgramCpp/output.txt.
