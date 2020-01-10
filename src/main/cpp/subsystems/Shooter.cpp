@@ -35,106 +35,63 @@ int Shooter::GetPosition()
   double counter = m_counter->Get();
   SmartDashboard::PutNumber("Counter", counter);
 
-  bool shooterStop = m_shooterStop.Get();
-  SmartDashboard::PutBoolean("Shooter Stop", shooterStop);
-  /*
-  if (shooterStop == true)
-  {
-    m_Position = 0;
-  }
-  else
-  {
+  SmartDashboard::PutNumber("Position", m_Position);
 	// position from previous direction change plus what's been accumulated so far in this direction
-    if (currentDirection > 0.05)
-    {
-      m_Position = m_Position + (m_counter->Get() - m_previousCounterPosition); // been going forward so add counter
-    }
-    if (currentDirection < -0.05)
-    {
-      m_Position = m_Position - (m_counter->Get() - m_previousCounterPosition); // been going backward so subtract counter
-    }
-    m_previousCounterPosition = m_counter->Get();
-    return m_Position;
-  }*/
-    if (currentDirection > 0.05)
-    {
-      m_Position = m_Position + (m_counter->Get() - m_previousCounterPosition); // been going forward so add counter
-    }
-    if (currentDirection < -0.05)
-    {
-      m_Position = m_Position - (m_counter->Get() - m_previousCounterPosition); // been going backward so subtract counter
-    }
-    m_previousCounterPosition = m_counter->Get();
-      if (shooterStop == true)
-      {
-        m_Position = 0;
-      }
-    return m_Position;
+	if (currentDirection > 0.05)
+  {
+	  m_Position = m_Position + (m_counter->Get() - m_previousCounterPosition); // been going forward so add counter
+  }
+  if (currentDirection < -0.05)
+  {
+	  m_Position = m_Position - (m_counter->Get() - m_previousCounterPosition); // been going backward so subtract counter
+  }
+  m_previousCounterPosition = m_counter->Get();
+  return m_Position;
 }
 
 int Shooter::SetAngle(XboxController* controller)
 {
-  bool xButton = controller->GetXButton();
-  bool bButton = controller->GetXButton();
-  bool aButton = controller->GetAButton();
-//setting the encoder ticks for a certain position
-  const double LowGoal = 34.0;
-  const double PickUp = 50.0;
-  const double Starting_Positon = 0;
-  const double MiddleGoal = 1.0;
-
   m_shooterMotor.Set(controller->GetY(GenericHID::kRightHand));
+  
+  /*
+  bool xButton = controller->GetXButton();
+  bool aButton = controller->GetAButton();
 
-  //double targetPosition = m_util.ToggleSwitch(xButton, true, LowGoal, PickUp, aButton, &m_joystickpress);
-  //SmartDashboard::PutNumber("TargetPosition", targetPosition);
-  SmartDashboard::PutNumber("Positon", m_Position);
+  const double ANGLE_45 = 22.0;
+  const double ANGLE_90 = 49.0;
 
-  if (xButton == true)
+  double targetPosition = m_util.ToggleSwitch(xButton, true, ANGLE_45, ANGLE_90, aButton, &m_joystickpress);
+  SmartDashboard::PutNumber("TargetPosition", targetPosition);
+  SmartDashboard::PutNumber("Old Position", m_Position);
+
+  if (m_Position < targetPosition)
   {
-    if (m_Position < MiddleGoal)
+    m_shooterMotor.Set(-0.5);
+  }
+  if (m_Position > targetPosition)
+  {
+    m_shooterMotor.Set(0.5);
+  }
+  else
+  {
+    // stop the motor if it is in the range
+    if ((m_Position < targetPosition-1.0) || (m_Position > targetPosition+1.0))
     {
-      m_shooterMotor.Set(-1);
-    }
-    else
-    {
-      m_shooterMotor.Set(1);
+      m_shooterMotor.Set(0);
     }
   }
-  /*
-  if (xButton == true)
-  {
-    if (m_Position > MiddleGoal)
-    {
-      m_shooterMotor.Set(1);
-    }
-    else
-    {
-      m_shooterMotor.Set(0);
-    }
-  }*/
-  /*
-  if (bButton == true)
-  {
-    if (m_Position > LowGoal)
-    {
-      m_shooterMotor.Set(0.5);
-    }
-    else
-    {
-      m_shooterMotor.Set(0);
-    }
-  }*/
   return m_Position;
+  */
 }
 void Shooter::TeleopPickUp(XboxController* controller)
 {
   //Get the trigger as double 1 and double 0
-  double PickUp = controller->GetTriggerAxis(GenericHID::kRightHand);
-  double SpitOut = controller->GetTriggerAxis(GenericHID::kLeftHand);
+  double GetRightTrigger = controller->GetTriggerAxis(GenericHID::kRightHand);
+  double GetLeftTrigger = controller->GetTriggerAxis(GenericHID::kLeftHand);
 
-  double MotorSpeedPickup = 0.85;
+  double MotorSpeedPickup = 0.75;
   //check right trigger, right override left if both are press
-  if (PickUp >= .25)
+  if (GetRightTrigger > 0.1)
   {
     m_shooterPickupTop.Set(MotorSpeedPickup);
     m_shooterPickupBottom.Set(MotorSpeedPickup);
@@ -142,10 +99,10 @@ void Shooter::TeleopPickUp(XboxController* controller)
   else
   {
     // run only after reading right trigger as false 
-    if (SpitOut >= .25)
+    if (GetLeftTrigger > 0.1)
     {
-      m_shooterPickupTop.Set(-0.5);
-      m_shooterPickupBottom.Set(-0.5);
+      m_shooterPickupTop.Set(MotorSpeedPickup);
+      m_shooterPickupBottom.Set(MotorSpeedPickup);
     }
     else 
     {
@@ -158,7 +115,7 @@ void Shooter::TeleopPickUp(XboxController* controller)
 }
 void Shooter::InvertMotorsPickUp()
 {
-  m_shooterPickupBottom.SetInverted(false);
+  m_shooterPickupBottom.SetInverted(true);
   m_shooterPickupTop.SetInverted(false);
   m_shooterMotor.SetInverted(false);
 }

@@ -19,131 +19,25 @@ void Gantry::InvertMotors()
   m_gantryMotor.SetInverted(true);
 }
 
-void Gantry::TeleopGantry(XboxController* controller, XboxController* controller2, XboxController* controller3)
-{   
-    //m_gantryMotor.Set(controller->GetY(GenericHID::kRightHand));
-
-    bool topLimit = m_topLimit.Get();
-    SmartDashboard::PutBoolean("Top Limit", topLimit);
-
-    bool bottomLimit = m_bottomLimit.Get();
-    SmartDashboard::PutBoolean("Bottom Limit", bottomLimit);
-
-    double winchRadius = 1;
-    m_pGantryEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * winchRadius);
-    if (bottomLimit == true)
-    {
-        m_pGantryEncoder.Reset();
-    }
-    double encoderDistance = m_pGantryEncoder.GetDistance();
-    SmartDashboard::PutNumber("Gantry Encoder", encoderDistance);
-
-    bool abutton = controller3->GetAButton();
-    bool bButton = controller3->GetBButton();
-    bool xButton = controller3->GetYButton();
-    bool yButton = controller3->GetXButton();
-
-    bool rightBumper2 = controller3->GetBumper(GenericHID::kRightHand);
-    bool leftBumper2 = controller3->GetBumper(GenericHID::kLeftHand);
-
+void Gantry::TeleopGantry(XboxController* pController)
+{
     //Hooks up the bumper variables to the actual bumpers on the controller
-    bool rightBumper = controller->GetBumper(GenericHID::kRightHand);
-    bool leftBumper = controller->GetBumper(GenericHID::kLeftHand);
-    bool abutton2 = controller->GetAButton();
-
-    //Makes a failsafe if both or neither of the bumpers are pressed
-     if ((((rightBumper == true) && (leftBumper == true)) || ((rightBumper == false) && (leftBumper == false))) && (((rightBumper2 == true) && (leftBumper2 == true)) || ((rightBumper2 == false) && (leftBumper2 == false))))
+    bool rightBumper = pController->GetBumper(GenericHID::kRightHand);
+    bool leftBumper = pController->GetBumper(GenericHID::kLeftHand);
+    if(rightBumper == true && leftBumper == false)
     {
-        if (abutton == true)
-        {
-            if (encoderDistance > 38)
-            {
-                MoveDown();
-            }
-            else
-            {
-                MoveUp();
-            }
-        }
-        else
-        {
-            if (bButton == true)
-            {
-                if (encoderDistance > 140)
-                {
-                    MoveDown();
-                }
-                else
-                {
-                    MoveUp();
-                }
-            }
-            else
-            {
-                if (xButton == true)
-                {
-                    if (encoderDistance > 223)
-                    {
-                        MoveDown();
-                    }
-                    else
-                    {
-                        MoveUp();
-                    }
-                }
-                else
-                {
-                    if (abutton2 == true)
-                    {
-                        if (encoderDistance > 25)
-                        {
-                            MoveDown();
-                        }
-                        else
-                        {
-                            MoveUp();
-                        }
-                    }
-                    else
-                    {
-                        if (yButton == true)
-                        {
-                            if (encoderDistance > 1.5)
-                            {
-                                MoveDown();
-                            }
-                            else
-                            {
-                                MoveUp();
-                            }
-                        }
-                        else
-                        {
-                            StopMotors();
-                        }
-                    }
-                }
-            }
-        }
+       MoveUp();
     }
     else
     {
-        if ((rightBumper == true) || (rightBumper2 == true))
+        if(leftBumper == true && rightBumper == false)
         {
-            MoveUp();
+            MoveDown();
         }
-        if ((leftBumper == true) || (leftBumper2 == true))
+        else
         {
-            if (bottomLimit == true)
-            {
-                StopMotors();
-            }
-            else
-            {
-                MoveDown();
-            }
+            StopMotors();
         }
-
     }
 }
 
@@ -156,22 +50,20 @@ void Gantry::InitDefaultCommand()
 void Gantry::MoveUp()
 {
     //When the right bumper is pressed, move gantry up
-    /*
     if (m_topLimit.Get() == true)
     {
         return;
-    }*/
-    m_gantryMotor.Set(-1);
+    }
+    m_gantryMotor.Set(0.5);
 }
 void Gantry::MoveDown()
 {
     //When the left bumper is pressed, move gantry down
-    /*
     if (m_bottomLimit.Get() == true)
     {
         return;
-    }*/
-    m_gantryMotor.Set(0.8);
+    }
+    m_gantryMotor.Set(-0.5);
 }
 void Gantry::StopMotors()
 {

@@ -13,7 +13,6 @@
 #include <frc/Encoder.h>
 #include "RobotMap.h"
 #include <frc/DigitalInput.h>
-#include <OI.h>
 
 using namespace frc;
 class Gantry : public frc::Subsystem 
@@ -32,6 +31,6 @@ class Gantry : public frc::Subsystem
   Gantry();
   void MoveUntilPosition(double targetposition);
   void InitDefaultCommand() override;
-  void TeleopGantry(XboxController* controller, XboxController* controller2, XboxController* controller3);
+  void TeleopGantry(XboxController* pController);
   void InvertMotors();
 };

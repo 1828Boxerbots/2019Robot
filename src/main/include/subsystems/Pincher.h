@@ -8,46 +8,26 @@
 #pragma once
 
 #include <frc/commands/Subsystem.h>
-#include <frc/Spark.h>
-#include <frc/XboxController.h>
-#include <frc/Encoder.h>
+#include <frc/Servo.h>
 #include "RobotMap.h"
+#include <frc/XboxController.h>
 #include "Util.h"
-#include <frc/AnalogInput.h>
-#include <frc/AnalogTrigger.h>
-#include <frc/Counter.h>
 
 using namespace frc;
-
-class Shooter : public frc::Subsystem {
+class Pincher : public frc::Subsystem 
+{
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-Spark m_shooterPickupTop{SHOOTER_PICKUP_TOP};
-Spark m_shooterPickupBottom{SHOOTER_PICKUP_BOTTOM};
-
-Spark m_shooterMotor {SHOOTER_WINDOW_MOTOR};
-AnalogTrigger m_shooterEncoder {SHOOTER_ENCODER};
-Counter* m_counter;
-
-int m_frame = 0;
-int m_previousCounterPosition= 0;
-
-float m_speedPrevious;
-int m_Position;
-
 Util m_util;
+Servo m_servoPincher {PINCHER_SERVO};
+
 int m_joystickpress = 0;
 
-//moter speed for the pickup 
  public:
-  Shooter();
-  void InvertMotorsPickUp();
+  Pincher();
   void InitDefaultCommand() override;
-  void TeleopPickUp(XboxController* controller);
-  int SetAngle(XboxController* controller);
-  void StopMotors();
-	int GetPosition();
-  void Intialize();
-
+  void TeleOpPincher(XboxController* pController);
+  void AutoOpen();
+  void AutoClose();
 };

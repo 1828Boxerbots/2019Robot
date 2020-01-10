@@ -13,6 +13,7 @@
 
 std::shared_ptr <DriveTrain> Robot::m_driveTrain = std::make_shared<DriveTrain>();
 std::shared_ptr <Shooter> Robot::m_shooter = std::make_shared<Shooter>();
+std::shared_ptr <Pincher> Robot::m_pincher = std::make_shared<Pincher>();
 std::shared_ptr <Gantry> Robot::m_gantry = std::make_shared<Gantry>();
 OI Robot::m_oi;
 
@@ -55,17 +56,40 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() 
 {
+  // std::string autoSelected = frc::SmartDashboard::GetString(
+  //     "Auto Selector", "Default");
+  // if (autoSelected == "My Auto") {
+  //   m_autonomousCommand = &m_myAuto;
+  // } else {
+  //   m_autonomousCommand = &m_defaultAuto;
+  // }
+  bool autoMode = SmartDashboard::GetBoolean("Auto Mode", false);
+
+  if (autoMode == false)
+  {
+    //Starts TeleOp Auto
     m_driveTrainCMD.Start();
     m_shooterCMD.Start();
+    m_pincherCMD.Start();
     m_gantryCMD.Start();
+  }
+  else
+  {
+    //m_autoCMD.Start();
+  }
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() 
 {
+  // This makes sure that the autonomous stops running when
+  // teleop starts running. If you want the autonomous to
+  // continue until interrupted by another command, remove
+  // this line or comment it out.ks
   m_driveTrainCMD.Start();
   m_shooterCMD.Start();
+  m_pincherCMD.Start();
   m_gantryCMD.Start();
 }
 

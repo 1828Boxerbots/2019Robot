@@ -22,54 +22,17 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double RightDistance = m_rightMotorEncoder.GetDistance();
   SmartDashboard::PutNumber("m_rightMotorEncoder", (RightDistance/25.4));
 
-  bool yButton = controller->GetYButton();
-  bool bButton = controller->GetBButton();
+  double leftX = controller->GetX(frc::GenericHID::kLeftHand);
+  double leftY = controller->GetY(frc::GenericHID::kLeftHand);
 
-  if (yButton == true)
-  {
-    double leftX = controller->GetX(frc::GenericHID::kLeftHand);
-    double leftY = -controller->GetY(frc::GenericHID::kLeftHand);
+  double rightoverallValue = -leftX + leftY;
+  double leftoverallValue = leftX + leftY;
 
-    double rightoverallValue = -leftX + leftY;
-    double leftoverallValue = leftX + leftY;
+  double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
+  double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
 
-    double limitedRightOverallValue = util.Limit(.85, -.85, rightoverallValue);
-    double limitedLeftOverallValue = util.Limit(.85, -.85, leftoverallValue);
-
-    m_leftMotor.Set(limitedLeftOverallValue);
-    m_rightMotor.Set(limitedRightOverallValue);
-  }
-  else
-  {
-    if (bButton == true)
-    {
-      double leftX = controller->GetX(frc::GenericHID::kLeftHand);
-      double leftY = controller->GetY(frc::GenericHID::kLeftHand);
-
-      double rightoverallValue = -leftX + leftY;
-      double leftoverallValue = leftX + leftY;
-
-      double limitedRightOverallValue = util.Limit(.5, -.5, rightoverallValue);
-      double limitedLeftOverallValue = util.Limit(.5, -.5, leftoverallValue);
-
-      m_leftMotor.Set(limitedLeftOverallValue);
-      m_rightMotor.Set(limitedRightOverallValue);
-    }
-    else
-    {
-    double leftX = controller->GetX(frc::GenericHID::kLeftHand);
-    double leftY = controller->GetY(frc::GenericHID::kLeftHand);
-
-    double rightoverallValue = -leftX + leftY;
-    double leftoverallValue = leftX + leftY;
-
-    double limitedRightOverallValue = util.Limit(.85, -.85, rightoverallValue);
-    double limitedLeftOverallValue = util.Limit(.85, -.85, leftoverallValue);
-
-    m_leftMotor.Set(limitedLeftOverallValue);
-    m_rightMotor.Set(limitedRightOverallValue);
-    }
-  }
+  m_leftMotor.Set(limitedLeftOverallValue);
+  m_rightMotor.Set(limitedRightOverallValue);
 }
 
 void DriveTrain::InitDefaultCommand() 

@@ -5,35 +5,32 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-#include "commands/GantryCMD.h"
+#include "commands/PincherCMD.h"
 #include "Robot.h"
 #include "OI.h"
 
-GantryCMD::GantryCMD() 
+PincherCMD::PincherCMD() 
 {
   // Use Requires() here to declare subsystem dependencies
   // eg. Requires(Robot::chassis.get());
-  Requires(Robot::m_gantry.get());
+  Requires(Robot::m_pincher.get());
 }
 
 // Called just before this Command runs the first time
-void GantryCMD::Initialize() 
-{
-
-}
+void PincherCMD::Initialize() {}
 
 // Called repeatedly when this Command is scheduled to run
-void GantryCMD::Execute() 
+void PincherCMD::Execute() 
 {
-  Robot::m_gantry->TeleopGantry(Robot::m_oi.GetController());
+  Robot::m_pincher->TeleOpPincher(Robot::m_oi.GetController());
 }
 
 // Make this return true when this Command no longer needs to run execute()
-bool GantryCMD::IsFinished() { return false; }
+bool PincherCMD::IsFinished() { return false; }
 
 // Called once after isFinished returns true
-void GantryCMD::End() {}
+void PincherCMD::End() {}
 
 // Called when another command which requires one or more of the same
 // subsystems is scheduled to run
-void GantryCMD::Interrupted() {}
+void PincherCMD::Interrupted() {}

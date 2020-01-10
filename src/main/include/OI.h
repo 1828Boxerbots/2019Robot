@@ -10,15 +10,10 @@
 #include "RobotMap.h"
 using namespace frc;
 
-class OI 
-{
+class OI {
   private:
   XboxController controller {XBOXCONTROLLER_USB};
-  XboxController controller2 {XBOXCONTROLLER_USB2};
-  XboxController controller3 {XBOXCONTROLLER_USB3};
  public:
   XboxController* GetController();
-  XboxController* GetController2();
-  XboxController* GetController3();
   OI();
 };

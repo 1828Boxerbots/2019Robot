@@ -9,15 +9,12 @@
 //PWM
 constexpr int LEFTMOTOR = 2;
 constexpr int RIGHTMOTOR = 6;
-
 constexpr int SHOOTER_WINDOW_MOTOR = 0;
-
 constexpr int SHOOTER_PICKUP_TOP = 5;
 constexpr int SHOOTER_PICKUP_BOTTOM = 1;
-
 constexpr int ARM_MOTOR = 9;
-
 constexpr int GANTRY_MOTOR = 7;
+constexpr int PINCHER_SERVO = 3;
 
 //DIO
 
@@ -32,14 +29,12 @@ constexpr int GANTRY_ENCODER_CHANNEL_A = 7;
 constexpr int GANTRY_ENCODER_CHANNEL_B = 8;
 
 constexpr int BOTTOM_LIMIT = 9;
-constexpr int TOP_LIMIT = 4;
+constexpr int TOP_LIMIT = 7;
 
-constexpr int SHOOTER_STOP =  6;
+constexpr int SHOOTER_STOP = 6;
 
 //USB
 constexpr int XBOXCONTROLLER_USB = 0;
-constexpr int XBOXCONTROLLER_USB2 = 1;
-constexpr int XBOXCONTROLLER_USB3 = 2;
 
 //Analog
 constexpr int SHOOTER_ENCODER = 3;
