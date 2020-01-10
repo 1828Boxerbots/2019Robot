@@ -22,21 +22,56 @@ void DriveTrain::TeleopDrive(XboxController* controller)
   double RightDistance = m_rightMotorEncoder.GetDistance();
   SmartDashboard::PutNumber("m_rightMotorEncoder", (RightDistance/25.4));
 
-  double rightY = controller->GetY(frc::GenericHID::kRightHand);
-  double leftY = controller->GetY(frc::GenericHID::kLeftHand);
+  bool yButton = controller->GetYButton();
+  bool bButton = controller->GetBButton();
 
-  double rightoverallValue = rightY;
-  double leftoverallValue = leftY;
+  if (yButton == true)
+  {
+    double leftX = controller->GetX(frc::GenericHID::kLeftHand);
+    double leftY = -controller->GetY(frc::GenericHID::kLeftHand);
 
-  double limitedRightOverallValue = util.Limit(.75, -.75, rightoverallValue);
-  double limitedLeftOverallValue = util.Limit(.75, -.75, leftoverallValue);
+    double rightoverallValue = -leftX + leftY;
+    double leftoverallValue = leftX + leftY;
 
+    double limitedRightOverallValue = util.Limit(.85, -.85, rightoverallValue);
+    double limitedLeftOverallValue = util.Limit(.85, -.85, leftoverallValue);
 
-  /* There seems to be an issue with Laika moving on her own. These
-  if statements are here as a temporary fix to the problem.*/
-  m_leftMotor.Set(limitedLeftOverallValue);
-  m_rightMotor.Set(limitedRightOverallValue);
+    m_leftMotor.Set(limitedLeftOverallValue);
+    m_rightMotor.Set(limitedRightOverallValue);
+  }
+  else
+  {
+    if (bButton == true)
+    {
+      double leftX = controller->GetX(frc::GenericHID::kLeftHand);
+      double leftY = controller->GetY(frc::GenericHID::kLeftHand);
+
+      double rightoverallValue = -leftX + leftY;
+      double leftoverallValue = leftX + leftY;
+
+      double limitedRightOverallValue = util.Limit(.5, -.5, rightoverallValue);
+      double limitedLeftOverallValue = util.Limit(.5, -.5, leftoverallValue);
+
+      m_leftMotor.Set(limitedLeftOverallValue);
+      m_rightMotor.Set(limitedRightOverallValue);
+    }
+    else
+    {
+    double leftX = controller->GetX(frc::GenericHID::kLeftHand);
+    double leftY = controller->GetY(frc::GenericHID::kLeftHand);
+
+    double rightoverallValue = -leftX + leftY;
+    double leftoverallValue = leftX + leftY;
+
+    double limitedRightOverallValue = util.Limit(.85, -.85, rightoverallValue);
+    double limitedLeftOverallValue = util.Limit(.85, -.85, leftoverallValue);
+
+    m_leftMotor.Set(limitedLeftOverallValue);
+    m_rightMotor.Set(limitedRightOverallValue);
+    }
+  }
 }
+
 void DriveTrain::InitDefaultCommand() 
 {
   // Set the default command for a subsystem here.
@@ -53,87 +88,6 @@ void DriveTrain::StopDriveMotors()
 }
 void DriveTrain::InvertMotors()
 {
-  m_leftMotor.SetInverted(true);
-  m_rightMotor.SetInverted(false);
+  m_leftMotor.SetInverted(false);
+  m_rightMotor.SetInverted(true);
 }
-void DriveTrain::DriveForward(double distance)
-{
-  double wheelRadius = 3;
-  m_leftMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
-  m_rightMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
-  double leftDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-  double rightDistance = (m_rightMotorEncoder.GetDistance() / 25.4);
-
-  m_leftMotor.Set(0.35);
-  m_rightMotor.Set(0.35);
-  while ((leftDistance < distance) || (rightDistance < distance))
-  {
-    leftDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-    rightDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-    SmartDashboard::PutNumber("Auto Drive Left", leftDistance);
-    SmartDashboard::PutNumber("Auto Drive Right", rightDistance);
-    SmartDashboard::PutNumber("Auto Drive Distane", distance);
-  }
-  StopDriveMotors();
-}
-void DriveTrain::DriveBackward(double distance)
-{
-  double wheelRadius = 3;
-  m_leftMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
-  m_rightMotorEncoder.SetDistancePerPulse(1.0 / 360.0 * 2.0 * 3.1415 * wheelRadius);
-  double leftDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-  double rightDistance = (m_rightMotorEncoder.GetDistance() / 25.4);
-
-  m_leftMotor.Set(-0.35);
-  m_rightMotor.Set(-0.35);
-  while ((leftDistance < distance) || (rightDistance < distance))
-  {
-    leftDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-    rightDistance = (m_leftMotorEncoder.GetDistance() / 25.4);
-    SmartDashboard::PutNumber("Auto Drive Left", leftDistance);
-    SmartDashboard::PutNumber("Auto Drive Right", rightDistance);
-    SmartDashboard::PutNumber("Auto Drive Distane", distance);
-  }
-  StopDriveMotors();
-}
-void DriveTrain::TurnRight(double degree)
-{
-  double angle = 0;
-  degree = 45;
-  //m_gyro.GetAngle();
-  //Set motor to turn right
-  //m_leftMotor.Set(0.35);
-  //m_rightMotor.Set(-0.35);
-  //Wait until it reached the angle
-  while(angle < degree)
-  {
-    double angle2 = m_gyro.GetAngle();
-    double turningValue = (kAngleSetpoint - m_gyro.GetAngle()) * kP;
-    SmartDashboard::PutNumber("Auto Angle", angle2);
-    SmartDashboard::PutNumber("Auto Angle Maybe", turningValue);
-    SmartDashboard::PutNumber("Auto Angle Target", degree);
-  }
-  //Then stop motors
-  StopDriveMotors();
-}
-void DriveTrain::TurnLeft(double degree)
-{
-  double angle = m_gyro.GetAngle();
-  //Set motor to turn left
-  m_leftMotor.Set(-0.65);
-  m_rightMotor.Set(0.65);
-  //Wait until it reached the angle
-  while(angle < degree)
-  {
-    angle = m_gyro.GetAngle();
-  }
-  //Then stop motors
-  StopDriveMotors();
-}
-void DriveTrain::CalibrateGyro()
-{
-  m_gyro.Reset();
-  m_gyro.Calibrate();
-}
-// Put methods for controlling this subsystem
-// here. Call these from Commands.

@@ -27,7 +27,6 @@ void ShooterCMD::Execute()
 {
   Robot::m_shooter->TeleopPickUp(Robot::m_oi.GetController());
   Robot::m_shooter->SetAngle(Robot::m_oi.GetController());
-  Robot::m_shooter->CheckDirectionChange(Robot::m_oi.GetController());
   Robot::m_shooter->GetPosition();
 
 }

@@ -16,6 +16,7 @@
 #include <frc/AnalogInput.h>
 #include <frc/AnalogTrigger.h>
 #include <frc/Counter.h>
+#include <frc/DigitalInput.h>
 
 using namespace frc;
 
@@ -23,8 +24,10 @@ class Shooter : public frc::Subsystem {
  private:
   // It's desirable that everything possible under private except
   // for methods that implement subsystem capabilities
-Spark m_shooterPickupLeft{SHOOTER_PICKUP_LEFT};
-Spark m_shooterPickupRight{SHOOTER_PICKUP_RIGHT};
+Spark m_shooterPickupTop{SHOOTER_PICKUP_TOP};
+Spark m_shooterPickupBottom{SHOOTER_PICKUP_BOTTOM};
+
+DigitalInput m_shooterStop{SHOOTER_STOP};
 
 Spark m_shooterMotor {SHOOTER_WINDOW_MOTOR};
 AnalogTrigger m_shooterEncoder {SHOOTER_ENCODER};
@@ -45,9 +48,8 @@ int m_joystickpress = 0;
   void InvertMotorsPickUp();
   void InitDefaultCommand() override;
   void TeleopPickUp(XboxController* controller);
-  void SetAngle(XboxController* controller);
+  int SetAngle(XboxController* controller);
   void StopMotors();
-  double CheckDirectionChange(XboxController* controller);
 	int GetPosition();
   void Intialize();
 

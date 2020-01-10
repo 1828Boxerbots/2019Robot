@@ -24,7 +24,7 @@ void DriveTrainCMD::Initialize()
 // Called repeatedly when this Command is scheduled to run
 void DriveTrainCMD::Execute() 
 {
-  Robot::m_driveTrain->TeleopDrive(Robot::m_oi.GetController());
+Robot::m_driveTrain->TeleopDrive(Robot::m_oi.GetController());
 }
 // Make this return true when this Command no longer needs to run execute()
 bool DriveTrainCMD::IsFinished() 

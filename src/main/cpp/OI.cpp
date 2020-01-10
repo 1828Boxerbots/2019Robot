@@ -13,6 +13,14 @@ XboxController* OI::GetController()
 {
   return &controller;
 }
+XboxController* OI::GetController2()
+{
+  return &controller2;
+}
+XboxController* OI::GetController3()
+{
+  return &controller3;
+}
 OI::OI()
 {
   // Process operator interface input here.

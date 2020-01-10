@@ -19,14 +19,13 @@ GantryCMD::GantryCMD()
 // Called just before this Command runs the first time
 void GantryCMD::Initialize() 
 {
-Robot::m_gantry->InvertMotors();
+
 }
 
 // Called repeatedly when this Command is scheduled to run
 void GantryCMD::Execute() 
 {
-  //commented out because gantry doesn't work mechanically
-  //Robot::m_gantry->TeleopGantry(Robot::m_oi.GetController());
+  Robot::m_gantry->TeleopGantry(Robot::m_oi.GetController(), Robot::m_oi.GetController2(), Robot::m_oi.GetController3());
 }
 
 // Make this return true when this Command no longer needs to run execute()

@@ -10,64 +10,14 @@
 #include <frc/commands/Scheduler.h>
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <cameraserver/CameraServer.h>
-#include <frc/shuffleboard/Shuffleboard.h>
-#include <frc/shuffleboard/ShuffleboardLayout.h>
-#include <frc/shuffleboard/ShuffleboardTab.h>
 
 std::shared_ptr <DriveTrain> Robot::m_driveTrain = std::make_shared<DriveTrain>();
 std::shared_ptr <Shooter> Robot::m_shooter = std::make_shared<Shooter>();
-std::shared_ptr <Arm> Robot::m_arm = std::make_shared<Arm>();
-std::shared_ptr <Pincher> Robot::m_pincher = std::make_shared<Pincher>();
 std::shared_ptr <Gantry> Robot::m_gantry = std::make_shared<Gantry>();
 OI Robot::m_oi;
 
-class AutoOneCMD : public AutoCMD
-{
-  public:
-    AutoOneCMD() { }
-    void Execute() override
-    {
-      m_count++;
-      SmartDashboard::PutString("Position", "AutoOneCMD");
-      SmartDashboard::PutNumber("Position Count", m_count);
-//      AutoOne();
-    }
-};
-class AutoTwoCMD : public AutoCMD
-{
-  public:
-    AutoTwoCMD() { }
-    void Execute() override
-    {
-      m_count++;
-      SmartDashboard::PutString("Position", "AutoTwoCMD");
-      SmartDashboard::PutNumber("Position Count", m_count);
-//      AutoTwo();
-    }
-};
-class AutoThreeCMD : public AutoCMD
-{
-  public:
-    AutoThreeCMD() { }
-    void Execute() override
-    {
-      m_count++;
-      SmartDashboard::PutString("Position", "AutoThreeCMD");
-      SmartDashboard::PutNumber("Position Count", m_count);
-//      AutoThree();
-    }
-};
-
 void Robot::RobotInit() 
-{  
-  Robot::m_driveTrain->CalibrateGyro();
-
-  m_autoMode = Shuffleboard::GetTab("Auto")
-    .Add("Robot Position", 1)
-    .WithWidget("Combo Box Chooser")
-    .GetEntry();
-  m_int = (int)m_autoMode.GetDouble(0);
-
+{
 }
 
 /**
@@ -105,48 +55,17 @@ void Robot::DisabledPeriodic() { frc::Scheduler::GetInstance()->Run(); }
  */
 void Robot::AutonomousInit() 
 {
-  // std::string autoSelected = frc::SmartDashboard::GetString(
-  //     "Auto Selector", "Default");
-  // if (autoSelected == "My Auto") {
-  //   m_autonomousCommand = &m_myAuto;
-  // } else {
-  //   m_autonomousCommand = &m_defaultAuto;
-  // }
-  m_autoCMD.Start();
-  /*
-  bool autoMode = SmartDashboard::GetBoolean("Auto Mode", false);
-
-  if (autoMode == false)
-  {
-    //Starts TeleOp Auto
     m_driveTrainCMD.Start();
     m_shooterCMD.Start();
-    m_armCMD.Start();
-    m_pincherCMD.Start();
     m_gantryCMD.Start();
-  }
-  else
-  {
-    /*Auto.reset(autoChooser.GetSelected());
-    if (Auto.get() != nullptr)
-    {
-      Auto->Start();
-    }
-  }*/
 }
 
 void Robot::AutonomousPeriodic() { frc::Scheduler::GetInstance()->Run(); }
 
 void Robot::TeleopInit() 
 {
-  // This makes sure that the autonomous stops running when
-  // teleop starts running. If you want the autonomous to
-  // continue until interrupted by another command, remove
-  // this line or comment it out.ks
   m_driveTrainCMD.Start();
-  //m_shooterCMD.Start();
-  m_armCMD.Start();
-  m_pincherCMD.Start();
+  m_shooterCMD.Start();
   m_gantryCMD.Start();
 }
 

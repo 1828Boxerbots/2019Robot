@@ -24,12 +24,12 @@ double Util::ToggleSwitch(bool toggleButton, bool resetButtton,
 {
     if ((toggleButton == true) && (*pJoystickPress == 0))
     {
-        *pJoystickPress ++;
+        *pJoystickPress = 1;
         return firstState;
     }
-    if ((toggleButton == true) && (*pJoystickPress == 1))
+    if ((toggleButton == true) && (*pJoystickPress > 0))
     {
-        *pJoystickPress --;
+        *pJoystickPress = 0;
         return secondState;
     }
     if (processSecondbutton == true)
@@ -39,4 +39,14 @@ double Util::ToggleSwitch(bool toggleButton, bool resetButtton,
             return 0.0;
         }
     }
+    if (*pJoystickPress > 0)
+    {
+        return firstState;
+    }
+    else
+    {
+        return secondState;
+    }
 }
+
+
